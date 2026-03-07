@@ -32,7 +32,8 @@ m.getEnemyNameGuid = m.wrap(m.get("app.EnemyDef.EnemyName(app.EnemyDef.ID)")) --
 m.isJudgeItem = m.wrap(m.get("app.ItemUtil.isJudgeItem(app.ItemDef.ID)")) --[[@as fun(item_id: app.ItemDef.ID): System.Boolean]]
 m.getStageNameGuid =
     m.wrap(m.get("app.GUIUtilApp.MapUtil.getStageFullName(app.FieldDef.STAGE, System.Guid)")) --[[@as fun(stage: app.FieldDef.STAGE, guid_ptr: integer): System.Boolean]]
-m.isMainStage = m.wrap(m.get("app.FieldUtil.isMainStage(app.FieldDef.STAGE)"))
+m.isMainStage = m.wrap(m.get("app.FieldUtil.isMainStage(app.FieldDef.STAGE)")) --[[@as fun(stage: app.FieldDef.STAGE): System.Boolean]]
+m.isArenaStage = m.wrap(m.get("app.FieldUtil.isArenaStage(app.FieldDef.STAGE)")) --[[@as fun(stage: app.FieldDef.STAGE): System.Boolean]]
 m.getItemNameGuid = m.wrap(m.get("app.ItemDef.RawName(app.ItemDef.ID)")) --[[@as fun(item_id: app.ItemDef.ID): System.Guid]]
 m.isQuestAcceptable = m.wrap(
     m.get(

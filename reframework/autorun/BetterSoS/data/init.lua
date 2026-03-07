@@ -65,7 +65,8 @@ local function make_maps()
     ---@type app.FieldDef.STAGE[]
     local ret = {}
     for _, stage in e.iter("app.FieldDef.STAGE") do
-        if m.isMainStage(stage) then
+        -- 10 = Rimechain Peak, 11 = Dragontorch Shrine
+        if stage == 10 or stage == 11 or m.isMainStage(stage) or m.isArenaStage(stage) then
             table.insert(ret, stage)
         end
     end
