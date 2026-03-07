@@ -76,7 +76,7 @@
 ---@class app.NetworkRequestManager : via.clr.ManagedObject
 ---@field _QuestSession app.net_quest_session.cQuestSession
 ---@field eraseRequest fun(self: app.NetworkRequestManager, index: System.UInt32)
----@field FindTargetRequest fun(self: app.NetworkRequestManager, index: System.UInt32): app.NetAbortableRequest
+---@field FindTargetRequest fun(self: app.NetworkRequestManager, index: System.UInt32): app.NetworkRequest
 ---@field leaveSession fun(self: app.NetworkRequestManager, type: app.net_session_manager.SESSION_TYPE, callback: System.Action<System.Boolean,app.NETWORK_ERROR_CODE> | 0, unknown_bool: System.Boolean)
 ---@field searchSession fun(self: app.NetworkRequestManager, type: app.net_session_manager.SESSION_TYPE, search_info: app.net_quest_session.cSearchQuestSessionInfo, callback: System.Action<System.Boolean,app.NETWORK_ERROR_CODE>)
 ---@field joinSession fun(self: app.NetworkRequestManager, type: app.net_session_manager.SESSION_TYPE, join_info: app.net_session_manager.cJoinSessionInfo, callback: System.Action<System.Boolean,app.NETWORK_ERROR_CODE>)

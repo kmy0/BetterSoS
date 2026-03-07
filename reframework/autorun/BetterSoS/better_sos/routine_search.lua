@@ -435,7 +435,9 @@ end
 function RoutineSearchQuest:abort()
     local req_man = s.get("app.NetworkManager"):get_RequestManager()
     local request = req_man:FindTargetRequest(e.get("app.NETWORK_REQUEST_LISTTYPE").SESSION)
-    if request then
+
+    if request and util_ref.is_a(request, "app.NetAbortableRequest") then
+        ---@cast request app.NetAbortableRequest
         request:set_IsAbort(true)
     end
 
