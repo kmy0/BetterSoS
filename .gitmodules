@@ -1,0 +1,6 @@
+[submodule "deps/ref_system_action"]
+	path = deps/ref_system_action
+	url = https://github.com/kmy0/ref_system_action.git
+[submodule "typedef/reframework"]
+	path = typedef/reframework
+	url = https://github.com/kmy0/REFrameworkLuaTypedef.git

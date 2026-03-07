@@ -1,0 +1,23 @@
+{
+    "Lua.workspace.library": [
+        "typedef/reframework/dist/library/*",
+        "typedef/ace/*",
+        "deps/ref_system_action/typedef/*"
+    ],
+    "Lua.workspace.ignoreSubmodules": false,
+    "Lua.diagnostics.groupFileStatus": {
+        "strict": "Any",
+        "strong": "Any",
+    },
+    "Lua.diagnostics.severity": {
+        "unused-local": "Warning",
+        "unused-function": "Hint"
+    },
+    "editor.rulers": [
+        120,
+    ],
+    "editor.formatOnSave": true,
+    "[lua]": {
+        "editor.defaultFormatter": "JohnnyMorganz.stylua"
+    },
+}

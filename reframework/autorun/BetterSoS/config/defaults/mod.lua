@@ -1,0 +1,145 @@
+---@class (exact) MainSettings : SettingsBase
+---@field version string
+---@field mod ModSettings
+
+---@class (exact) ModLanguage
+---@field file string
+---@field fallback boolean
+
+---@class (exact) ModSettings
+---@field enabled boolean
+---@field lang ModLanguage
+---@field ignore_passcode boolean
+---@field ignore_manualaccept boolean
+---@field ignore_time boolean
+---@field ignore_time_limit boolean
+---@field ignore_player boolean
+---@field ignore_player_max boolean
+---@field ignore_rank_lower boolean
+---@field ignore_rank_upper boolean
+---@field ignore_monster boolean
+---@field ignore_monster_species boolean
+---@field ignore_monster_state boolean
+---@field ignore_monster_target boolean
+---@field ignore_map boolean
+---@field ignore_type boolean
+---@field ignore_environ boolean
+---@field require_item_wishlist boolean
+---@field require_item_judge boolean
+---@field require_item_rare boolean
+---@field require_item_wishlist_any boolean
+---@field require_boost boolean
+---@field auto_pick_quest boolean
+---@field auto_start_quest boolean
+---@field auto_search boolean
+---@field slider_time integer
+---@field slider_time_limit integer
+---@field slider_player integer
+---@field slider_player_max integer
+---@field slider_rank_lower integer
+---@field slider_rank_upper integer
+---@field combo_quest_start integer
+---@field combo_ignore_monster integer
+---@field combo_ignore_map integer
+---@field combo_item_judge integer
+---@field combo_ignore_type integer
+---@field combo_ignore_monster_species integer
+---@field combo_ignore_monster_target integer
+---@field combo_ignore_monster_state integer
+---@field combo_ignore_environ integer
+---@field monster table<string, integer>
+---@field monster_species table<string, integer>
+---@field monster_target table<string, integer>
+---@field monster_state table<string, integer>
+---@field map table<string, integer>
+---@field type table<string, integer>
+---@field environ table<string, integer>
+---@field bind {
+---     action: BindBase[],
+---     buffer: integer,
+---     combo_action: integer,
+--- }
+
+local version = require("BetterSoS.config.version")
+
+---@type MainSettings
+return {
+    version = version.version,
+    mod = {
+        lang = {
+            file = "en-us",
+            fallback = true,
+        },
+        enabled = true,
+        ignore_passcode = true,
+        ignore_manualaccept = true,
+        ignore_time = false,
+        ignore_time_limit = false,
+        ignore_player = false,
+        ignore_rank_lower = false,
+        ignore_rank_upper = false,
+        ignore_map = false,
+        ignore_monster = false,
+        ignore_player_max = false,
+        ignore_monster_state = false,
+        ignore_monster_target = false,
+        ignore_monster_species = false,
+        ignore_type = false,
+        ignore_environ = false,
+        require_item_wishlist = false,
+        require_item_wishlist_any = false,
+        require_item_judge = false,
+        require_item_rare = false,
+        require_boost = false,
+        auto_pick_quest = false,
+        auto_start_quest = false,
+        auto_search = false,
+        slider_time = 1,
+        slider_time_limit = 1,
+        slider_player = 3,
+        slider_player_max = 3,
+        slider_rank_lower = 1,
+        slider_rank_upper = 1,
+        combo_quest_start = 1,
+        combo_ignore_monster = 1,
+        combo_ignore_map = 1,
+        combo_item_judge = 1,
+        combo_ignore_type = 1,
+        combo_ignore_monster_species = 1,
+        combo_ignore_monster_state = 1,
+        combo_ignore_monster_target = 1,
+        combo_ignore_environ = 1,
+        monster = {},
+        map = {},
+        type = {},
+        monster_species = {},
+        monster_target = {},
+        monster_state = {},
+        environ = {},
+        bind = {
+            action = {
+                {
+                    bound_value = "search_cancel",
+                    device = "KEYBOARD",
+                    keys = {
+                        79,
+                    },
+                    name = "ESCAPE",
+                    name_display = "ESCAPE",
+                },
+                {
+                    bound_value = "search_cancel",
+                    device = "PAD",
+                    keys = {
+                        128,
+                    },
+
+                    name = "R_RIGHT",
+                    name_display = "R_RIGHT",
+                },
+            },
+            buffer = 2,
+            combo_action = 1,
+        },
+    },
+}

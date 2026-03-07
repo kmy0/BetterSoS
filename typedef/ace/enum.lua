@@ -1,0 +1,37 @@
+---@meta
+
+---@class via.Language : System.Enum
+
+---@class ace.GUIDef.SHUTDOWN_MODE : System.Enum
+---@class ace.ACE_PAD_KEY.BITS : System.Enum
+---@class ace.ACE_MKB_KEY.INDEX : System.Enum
+---@class ace.GUIDef.INPUT_DEVICE : System.Enum
+
+---@class app.GUIID.ID : System.Enum
+---@class app.QuestDef.QUEST_SEARCH_PARAM_ROLE_ID : System.Enum
+---@class app.cGUI050000QuestSearchWindowCtrl.SEARCH_STATE : System.Enum
+---@class app.MissionIDList.ID : System.Enum
+---@class app.FieldDef.STAGE :  System.Enum
+---@class app.QuestDef.EM_REWARD_RANK : System.Enum
+---@class app.EnemyDef.ID : System.Enum
+---@class app.ItemDef.ID : System.Enum
+---@class app.EnemyDef.LEGENDARY_ID : System.Enum
+---@class app.NETWORK_ERROR_CODE : System.Enum
+---@class app.GUIDefApp.NOTIFY_WINDOW_TYPE : System.Enum
+---@class app.net_session_manager.SESSION_TYPE : System.Enum
+---@class app.GUIDefApp.SHUTDOWN_TYPE : System.Enum
+---@class app.QuestDef.QUEST_TYPE : System.Enum
+---@class app.MissionTypeList.TYPE : System.Enum
+---@class app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE : System.Enum
+---@class app.GimmickDef.ID : System.Enum
+---@class app.cStartPointInfo.START_POINT_TYPE : System.Enum
+---@class app.GUI050000.QUEST_TYPE : System.Enum
+---@class app.cGUIQuestOrderParam.QUEST_START_TYPE : System.Enum
+---@class app.NETWORK_REQUEST_LISTTYPE : System.Enum
+---@class app.NetworkRequest.TYPE : System.Enum
+---@class app.cGUIQuestOrderParam.QUEST_ORDER_FROM : System.Enum
+---@class app.EnvironmentType.ENVIRONMENT : System.Enum
+---@class app.EnemyDef.ROLE_ID : System.Enum
+---@class app.EnemyDef.SPECIES : System.Enum
+---@class app.EnemyDef.SPECIES_Fixed : System.Enum
+---@class app.QuestDef.RANK : System.Enum
