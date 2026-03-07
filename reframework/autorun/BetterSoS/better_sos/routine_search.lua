@@ -48,12 +48,11 @@ this.state = {
     LOAD_QUESTS = 5,
     WAIT_LOAD_QUESTS = 6,
     PICK_OR_START = 7,
-    WAIT_PICK = 8,
-    WAIT_JOIN = 9,
-    START_QUEST = 10,
-    SUCCESS = 11,
-    END = 12,
-    ERR = 13,
+    WAIT_JOIN = 8,
+    START_QUEST = 9,
+    SUCCESS = 10,
+    END = 11,
+    ERR = 12,
 }
 ---@enum RoutineSearchQuestMode
 this.mode = {
@@ -87,7 +86,6 @@ function RoutineSearchQuest:new(mode, quest_filter)
             [this.state.LOAD_QUESTS] = RoutineSearchQuest._load_quests,
             [this.state.WAIT_LOAD_QUESTS] = RoutineSearchQuest._wait_load_quests,
             [this.state.PICK_OR_START] = RoutineSearchQuest._pick_or_start,
-            [this.state.WAIT_PICK] = RoutineSearchQuest._wait_pick,
             [this.state.WAIT_JOIN] = RoutineSearchQuest._do_nothing,
             [this.state.START_QUEST] = RoutineSearchQuest._start_quest,
             [this.state.SUCCESS] = RoutineSearchQuest._success,
@@ -110,8 +108,8 @@ end
 
 function RoutineSearchQuest:can_cancel()
     return self._state < this.state.START_QUEST
-        and self._state ~= this.state.WAIT_PICK
         and self._state ~= this.state.PICK_OR_START
+        and self._state ~= this.state.LOAD_QUESTS
 end
 
 ---@param dialog_type RoutineSearchQuestDialogType
@@ -202,6 +200,8 @@ function RoutineSearchQuest:_load_quests()
     then
         local ctx = self._GUI050000:get_ViewFlowContext()
         m.loadQuestsAfterSearch(ctx)
+        ctx.IsNextFlow = true
+
         self:_set_state(this.state.WAIT_LOAD_QUESTS)
     else
         self:_set_state(this.state.PICK_OR_START)
@@ -291,7 +291,7 @@ function RoutineSearchQuest:_pick_or_start()
         quest_list_parts:updateQuestDetailWindow(quest)
         quest_list_parts:decideQuest(quest)
 
-        self:_set_state(this.state.WAIT_PICK)
+        self:_set_state(this.state.SUCCESS)
     elseif self._mode == this.mode.AUTO_PICK then
         local quest = util_table.pick_random_value(self._quests)
         if not quest then
@@ -307,20 +307,6 @@ function RoutineSearchQuest:_pick_or_start()
         )
         self:_set_state(this.state.SUCCESS)
     else
-        self:_set_state(this.state.SUCCESS)
-    end
-end
-
-function RoutineSearchQuest:_wait_pick()
-    if not self._GUI050000 then
-        self:_set_state(this.state.ERR)
-        return
-    end
-
-    local ctx = self._GUI050000:get_ViewFlowContext()
-    if not ctx.IsNextFlow then
-        ctx.IsNextFlow = true
-    elseif util_mod.get_gui_cls("app.GUI050001") and ctx.IsNextFlow then
         self:_set_state(this.state.SUCCESS)
     end
 end
