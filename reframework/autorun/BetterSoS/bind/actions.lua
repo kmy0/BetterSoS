@@ -16,6 +16,7 @@ function this.search_start(...)
         not routine_search.has_instance()
         and m.canOpenStartMenu(false)
         and not s.get("app.MissionManager"):get_IsActiveQuest()
+        and util_mod.get_search_mode() ~= routine_search.mode.SEARCH_ONLY
     then
         routine_search.new(util_mod.get_search_mode(), util_mod.make_quest_filter())
     end
