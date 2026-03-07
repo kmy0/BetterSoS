@@ -46,7 +46,10 @@ function this.update(_)
     then
         search_trigger = true
     elseif search_trigger and ace_player.is_in_village() and m.canOpenStartMenu(false) then
-        routine_search.new(util_mod.get_search_mode(), util_mod.make_quest_filter())
+        if util_mod.is_auto_search() then
+            routine_search.new(util_mod.get_search_mode(), util_mod.make_quest_filter())
+        end
+
         search_trigger = false
     end
 end
