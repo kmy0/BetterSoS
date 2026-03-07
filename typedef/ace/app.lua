@@ -106,6 +106,7 @@
 ---@field envType app.EnvironmentType.ENVIRONMENT
 ---@field questTimeLimit System.Int32
 ---@field questRank app.QuestDef.RANK
+---@field multiplaySetting app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING
 
 ---@class app.user_data.ItemData.cData : ace.user_data.ExcelUserData.cData
 ---@field get_RawName fun(self: app.user_data.ItemData.cData): System.Guid

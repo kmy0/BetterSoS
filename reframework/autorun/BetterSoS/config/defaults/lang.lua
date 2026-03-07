@@ -69,6 +69,11 @@ return {
             START_AND_DEPART = "Accept & Depart",
             START_AND_PREP = "Accept & Prep",
         },
+        combo_ignore_multiplay_setting = {
+            PLAYER_WITH_NPC = "Players & Support Hunters",
+            PLAYER_ONLY = "Only Players",
+            NPC_ONLY = "Only Support Hunters",
+        },
         box_require_item_wishlist = "Wishlisted Item",
         box_require_item_rare = "Rare Item",
         box_require_boost = "Gathering Boost",

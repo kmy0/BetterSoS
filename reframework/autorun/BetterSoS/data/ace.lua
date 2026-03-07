@@ -13,6 +13,7 @@
 ---@field monster_to_species table<app.EnemyDef.ID, app.EnemyDef.SPECIES>
 ---@field monster_species app.EnemyDef.SPECIES[]
 ---@field environ app.EnvironmentType.ENVIRONMENT[]
+---@field multiplay_setting app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING[]
 ---@field search_type_to_guid table<string, string>
 ---@field start_type_to_guid table<string, string>
 ---@field quest_type app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE[]
@@ -50,6 +51,7 @@ local this = {
         },
         monster_species = {},
         environ = {},
+        multiplay_setting = {},
     },
 }
 return this

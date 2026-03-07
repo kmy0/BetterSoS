@@ -24,6 +24,7 @@
 ---@field ignore_map boolean
 ---@field ignore_type boolean
 ---@field ignore_environ boolean
+---@field ignore_multiplay_setting boolean
 ---@field require_item_wishlist boolean
 ---@field require_item_judge boolean
 ---@field require_item_rare boolean
@@ -47,6 +48,7 @@
 ---@field combo_ignore_monster_target integer
 ---@field combo_ignore_monster_state integer
 ---@field combo_ignore_environ integer
+---@field combo_ignore_multiplay_setting integer
 ---@field monster table<string, integer>
 ---@field monster_species table<string, integer>
 ---@field monster_target table<string, integer>
@@ -54,6 +56,7 @@
 ---@field map table<string, integer>
 ---@field type table<string, integer>
 ---@field environ table<string, integer>
+---@field multiplay_setting table<string, integer>
 ---@field bind {
 ---     action: BindBase[],
 ---     buffer: integer,
@@ -86,6 +89,7 @@ return {
         ignore_monster_species = false,
         ignore_type = false,
         ignore_environ = false,
+        ignore_multiplay_setting = false,
         require_item_wishlist = false,
         require_item_wishlist_any = false,
         require_item_judge = false,
@@ -109,6 +113,7 @@ return {
         combo_ignore_monster_state = 1,
         combo_ignore_monster_target = 1,
         combo_ignore_environ = 1,
+        combo_ignore_multiplay_setting = 1,
         monster = {},
         map = {},
         type = {},
@@ -116,6 +121,7 @@ return {
         monster_target = {},
         monster_state = {},
         environ = {},
+        multiplay_setting = {},
         bind = {
             action = {
                 {

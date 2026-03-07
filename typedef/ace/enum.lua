@@ -35,3 +35,4 @@
 ---@class app.EnemyDef.SPECIES : System.Enum
 ---@class app.EnemyDef.SPECIES_Fixed : System.Enum
 ---@class app.QuestDef.RANK : System.Enum
+---@class app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING : System.Enum

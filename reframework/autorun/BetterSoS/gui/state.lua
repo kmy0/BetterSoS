@@ -13,6 +13,7 @@
 ---@field monster_state Combo
 ---@field environ Combo
 ---@field action Combo
+---@field multiplay_setting Combo
 
 ---@class (exact) NewBindListener
 ---@field opt string
@@ -152,6 +153,20 @@ local this = {
                 return config.lang:tr(mod.map.actions[key])
             end
         ),
+        multiplay_setting = combo:new(
+            nil,
+            function(a, b)
+                return a.value < b.value
+            end,
+            nil,
+            function(key)
+                local setting = tonumber(key) --[[@as app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING]]
+                local name = e.get(
+                    "app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING"
+                )[setting]
+                return config.lang:tr("mod.combo_ignore_multiplay_setting." .. name)
+            end
+        ),
     },
 }
 
@@ -198,6 +213,11 @@ function this.init()
         util_table.map_array(ace_map.environ),
         nil,
         util_table.keys(config_mod.environ)
+    )
+    this.combo.multiplay_setting:swap(
+        util_table.map_array(ace_map.multiplay_setting),
+        nil,
+        util_table.keys(config_mod.multiplay_setting)
     )
 
     this.translate_combo()

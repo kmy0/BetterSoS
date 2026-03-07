@@ -26,7 +26,7 @@ local this = {
     },
 }
 
----@param key "map" | "monster" | "type" | "monster_species" | "monster_state" | "monster_target" | "environ"
+---@param key "map" | "monster" | "type" | "monster_species" | "monster_state" | "monster_target" | "environ" | "multiplay_setting"
 local function draw_chips(key)
     local config_mod = config.current.mod
     local combo = state.combo[key] --[[@as Combo]]
@@ -192,6 +192,7 @@ local function draw_quest_attr()
         )
     )
     draw_chips("type")
+    draw_chips("multiplay_setting")
 
     imgui.spacing()
 end

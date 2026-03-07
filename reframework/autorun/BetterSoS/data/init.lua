@@ -120,6 +120,17 @@ local function make_environ()
     return util_table.sort(ret)
 end
 
+---@return app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING[]
+local function make_multiplay_setting()
+    ---@type app.EnemyDef.SPECIES[]
+    local ret = {}
+    for _, setting in e.iter("app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING") do
+        table.insert(ret, setting)
+    end
+
+    return util_table.sort(ret)
+end
+
 ---@return {[app.FieldDef.STAGE]: {[AreaId]: {CampId: integer}}}?
 local function make_SmartCampPicker_data()
     if not util_misc.mod_exists("smart_camp_picker") then
@@ -259,6 +270,7 @@ function this.init()
     ace_map.max_quest_rank = get_max_quest_rank()
     ace_map.quest_type, ace_map.quest_type_map = make_search_type_to_quest_type()
     ace_map.SmartCampPicker_data = make_SmartCampPicker_data()
+    ace_map.multiplay_setting = make_multiplay_setting()
 
     return true
 end

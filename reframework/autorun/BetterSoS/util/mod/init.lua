@@ -75,6 +75,11 @@ function this.make_quest_filter()
             state.combo.item:get_key(config_mod.combo_item_judge)
         ) or nil,
         type = quest_type,
+        multiplay_setting = config_mod.ignore_multiplay_setting
+                and util_table.map_table(config_mod.multiplay_setting, function(o)
+                    return tonumber(o)
+                end)
+            or nil,
     }
 end
 
@@ -85,6 +90,12 @@ function this.predicate_quest(quest, quest_filter)
     if
         (quest_filter.passcode and quest.isLocked)
         or (quest_filter.manualaccept and not quest.isAutoAccept)
+    then
+        return false
+    end
+
+    if
+        quest_filter.multiplay_setting and quest_filter.multiplay_setting[quest.multiplaySetting]
     then
         return false
     end
