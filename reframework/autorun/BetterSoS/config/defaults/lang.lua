@@ -81,7 +81,7 @@ return {
         box_auto_pick_quest = "Pick Quest",
         box_auto_start_quest = "Accept Quest",
         box_auto_search = "Search",
-        tooltip_auto_search = "Start searching immediately after returning from the quest",
+        tooltip_auto_search = "Start searching immediately after returning from a quest",
         tooltip_item_rare = "'Shiny' items, plates, gems, etc.",
         tooltip_auto_start_quest = "Requires Manual Accept, and Passcode filters to be enabled",
         tooltip_investigations_only = "Investigations Only",
