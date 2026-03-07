@@ -5,9 +5,21 @@ local m = require("BetterSoS.util.ref.methods")
 local routine_search = require("BetterSoS.better_sos.routine_search")
 local s = require("BetterSoS.util.ref.singletons")
 local util_mod = require("BetterSoS.util.mod.init")
+local util_ref = require("BetterSoS.util.ref.init")
 
 local this = {}
 local search_trigger = false
+
+---@param args userdata[]
+---@return boolean, app.NETWORK_ERROR_CODE
+local function get_network_response(args)
+    local success = util_ref.to_bool(args[3])
+    local network_error = util_ref.to_int(args[4])
+    local response = sdk.to_managed_object(args[5]) --[[@as System.Array<System.Byte>]]
+    local err_man = s.get("app.NetworkManager"):get_ErrorManager()
+    local tup = err_man:ConvertNetworkErrorMessage(network_error, response)
+    return success, tup.Item1
+end
 
 function this.search_pre(args)
     if config.current.mod.enabled and not routine_search.has_instance() then
@@ -55,14 +67,7 @@ function this.update(_)
 end
 
 function this.app_error_pre(args)
-    if
-        config.current.mod.enabled
-        and routine_search.has_instance()
-        and (
-            routine_search.is_state(routine_search.state.WAIT_JOIN)
-            or routine_search.is_state(routine_search.state.PICK_OR_START)
-        )
-    then
+    if config.current.mod.enabled and routine_search.has_instance() then
         local err_man = sdk.to_managed_object(args[2]) --[[@as app.NetworkErrorManager]]
         local err_req = err_man:get_DisplayError()
 
@@ -70,6 +75,22 @@ function this.app_error_pre(args)
             m.callbackNetworkError(err_man, 0)
         end
         return sdk.PreHookResult.SKIP_ORIGINAL
+    end
+end
+
+function this.search_callback_pre(args)
+    if config.current.mod.enabled and routine_search.has_instance() then
+        local o = routine_search.get_instance()
+        local success, network_error = get_network_response(args)
+        o:search_callback(success, network_error)
+    end
+end
+
+function this.join_callback_pre(args)
+    if config.current.mod.enabled and routine_search.has_instance() then
+        local o = routine_search.get_instance()
+        local success, network_error = get_network_response(args)
+        o:join_callback(success, network_error)
     end
 end
 

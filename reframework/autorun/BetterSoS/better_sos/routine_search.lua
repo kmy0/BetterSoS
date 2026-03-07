@@ -148,25 +148,16 @@ function RoutineSearchQuest:_do_nothing() end
 
 ---@protected
 function RoutineSearchQuest:_search()
+    local req_man = s.get("app.NetworkManager"):get_RequestManager()
+    if not req_man:checkOffline(e.get("app.net_session_manager.SESSION_TYPE").QUEST, 0) then
+        self:_set_state(this.state.ERR)
+        return
+    end
+
     self:_open_dialog(dialog.SEARCH)
 
     local search_info = util_mod.get_search_info()
-    local action = ref_system_action.create_action(
-        "System.Action`2<System.Boolean,app.NETWORK_ERROR_CODE>",
-        function(success, error_code)
-            if
-                util_ref.to_bool(success)
-                and util_ref.to_int(error_code) == e.get("app.NETWORK_ERROR_CODE").NONE
-            then
-                self:_set_state(this.state.FILTER_QUESTS)
-            else
-                self:_set_state(this.state.ERR)
-            end
-        end
-    )
-
-    local req_man = s.get("app.NetworkManager"):get_RequestManager()
-    req_man:searchSession(e.get("app.net_session_manager.SESSION_TYPE").QUEST, search_info, action)
+    req_man:searchSession(e.get("app.net_session_manager.SESSION_TYPE").QUEST, search_info, 0)
     self:_set_state(this.state.WAIT_SEARCH)
     self._backoff:restart(self:_backoff_fn())
 end
@@ -254,27 +245,12 @@ function RoutineSearchQuest:_pick_or_start()
             password
         )
 
-        local action = ref_system_action.create_action(
-            "System.Action`2<System.Boolean,app.NETWORK_ERROR_CODE>",
-            function(success, error_code)
-                if
-                    util_ref.to_bool(success)
-                    and util_ref.to_int(error_code) == e.get("app.NETWORK_ERROR_CODE").NONE
-                then
-                    self:_set_state(this.state.START_QUEST)
-                else
-                    self._ignored_sessions[quest.questSessionId] = true
-                    self:_set_state(this.state.WAIT_BACKOFF)
-                end
-            end
-        )
-
         local req_man = s.get("app.NetworkManager"):get_RequestManager()
         req_man:call(
             "joinSession(app.net_session_manager.SESSION_TYPE, app.net_session_manager.cJoinSessionInfo, System.Action`2<System.Boolean,app.NETWORK_ERROR_CODE>)",
             e.get("app.net_session_manager.SESSION_TYPE").QUEST,
             join_sess_info,
-            action
+            0
         )
 
         self:_set_state(this.state.WAIT_JOIN)
@@ -320,6 +296,14 @@ function RoutineSearchQuest:_start_quest()
     local user_manager = s.get("app.NetworkManager"):get_UserInfoManager()
     local host_info =
         user_manager:getHostUserInfo(e.get("app.net_session_manager.SESSION_TYPE").QUEST) --[[@as app.Net_QuestUserInfo]]
+    local quest_search = self._quest.Session:get_SearchResult()
+
+    if not host_info then
+        self._ignored_sessions[quest_search.questSessionId] = true
+        self:_set_state(this.state.WAIT_BACKOFF)
+        return
+    end
+
     local keep_quest_data = host_info:get_KeepQuestData()
 
     ---@type app.cActiveQuestData
@@ -346,7 +330,6 @@ function RoutineSearchQuest:_start_quest()
 
     self._quest:set_ActiveQuestData(quest_data)
 
-    local quest_search = self._quest.Session:get_SearchResult()
     local start_point = util_mod.get_closest_starting_point(
         quest_search.fieldId,
         self._quest:get_TargetEmStartArea(),
@@ -400,6 +383,28 @@ function RoutineSearchQuest:_success()
     end
 
     self:_set_state(this.state.END)
+end
+
+---@param success boolean
+---@param network_error app.NETWORK_ERROR_CODE
+function RoutineSearchQuest:search_callback(success, network_error)
+    if success and network_error == e.get("app.NETWORK_ERROR_CODE").NONE then
+        self:_set_state(this.state.FILTER_QUESTS)
+    else
+        self:_set_state(this.state.ERR)
+    end
+end
+
+---@param success boolean
+---@param network_error app.NETWORK_ERROR_CODE
+function RoutineSearchQuest:join_callback(success, network_error)
+    if success and network_error == e.get("app.NETWORK_ERROR_CODE").NONE then
+        self:_set_state(this.state.START_QUEST)
+    else
+        local quest = self._quest.Session:get_SearchResult()
+        self._ignored_sessions[quest.questSessionId] = true
+        self:_set_state(this.state.WAIT_BACKOFF)
+    end
 end
 
 ---@return boolean?

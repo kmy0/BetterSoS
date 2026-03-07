@@ -64,3 +64,9 @@
 
 ---@class System.Action<T> : System.MulticastDelegate
 ---@field Invoke fun(self: System.Action<any>)
+
+---@class System.ValueTuple : System.ValueType
+---@field Item1 any
+---@field Item2 any
+---@field Item3 any
+---@field Item4 any

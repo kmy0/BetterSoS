@@ -75,6 +75,14 @@ m.hook(
 )
 m.hook("app.GUIManager.lateUpdateApp()", nil, hook.update)
 m.hook("app.NetworkErrorManager.showError()", hook.app_error_pre)
+m.hook(
+    "app.NetworkRequestManager.searchSessionCallback(System.Boolean, System.Int32, System.Byte[])",
+    hook.search_callback_pre
+)
+m.hook(
+    "app.NetworkRequestManager.joinSessionCallback(System.Boolean, System.Int32, System.Byte[])",
+    hook.join_callback_pre
+)
 
 re.on_draw_ui(function()
     if imgui.button(string.format("%s %s", config.name, config.commit)) and init.ok then

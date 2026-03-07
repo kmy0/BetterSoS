@@ -23,6 +23,7 @@
 ---@class app.cCampManager : via.clr.ManagedObject
 ---@class app.CharacterBase : app.AppBehavior
 ---@class app.NetworkRequest : via.clr.ManagedObject
+---@class app.NetworkErrorParamsBase : via.clr.ManagedObject
 
 ---@class app.net_quest_session.cSearchQuestSessionInfo : app.net_session_manager.cSearchSessionInfo
 ---@field set_Rescure fun(self: app.net_quest_session.cSearchQuestSessionInfo, val: System.Boolean)
@@ -69,12 +70,14 @@
 ---@class app.NetworkManager : ace.GAElement
 ---@field get_RequestManager fun(self: app.NetworkManager): app.NetworkRequestManager
 ---@field get_UserInfoManager fun(self: app.NetworkManager): app.Net_UserInfoManager
+---@field get_ErrorManager fun(self: app.NetworkManager): app.NetworkErrorManager
 
 ---@class app.Net_UserInfoManager : via.clr.ManagedObject
 ---@field getHostUserInfo fun(self: app.Net_UserInfoManager, type: app.net_session_manager.SESSION_TYPE): app.Net_UserInfo
 
 ---@class app.NetworkRequestManager : via.clr.ManagedObject
 ---@field _QuestSession app.net_quest_session.cQuestSession
+---@field checkOffline fun(self: app.NetworkRequestManager, type: app.net_session_manager.SESSION_TYPE, callback: System.Action<System.Boolean,app.NETWORK_ERROR_CODE>): System.Boolean
 ---@field eraseRequest fun(self: app.NetworkRequestManager, index: System.UInt32)
 ---@field FindTargetRequest fun(self: app.NetworkRequestManager, index: System.UInt32): app.NetworkRequest
 ---@field leaveSession fun(self: app.NetworkRequestManager, type: app.net_session_manager.SESSION_TYPE, callback: System.Action<System.Boolean,app.NETWORK_ERROR_CODE> | 0, unknown_bool: System.Boolean)
@@ -245,3 +248,6 @@
 
 ---@class app.cQuestFlowParam : via.clr.ManagedObject
 ---@field IsResultSeamless System.Boolean
+
+---@class app.NetworkErrorManager : via.clr.ManagedObject
+---@field ConvertNetworkErrorMessage fun(self: app.NetworkErrorManager, error_code: System.Int32, response: System.Array<System.Byte>): System.ValueTuple<app.NETWORK_ERROR_CODE,System.Guid,System.Array<app.NetworkErrorParamsBase>,System.Boolean>
