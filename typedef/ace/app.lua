@@ -27,6 +27,7 @@
 
 ---@class app.net_quest_session.cSearchQuestSessionInfo : app.net_session_manager.cSearchSessionInfo
 ---@field set_Rescure fun(self: app.net_quest_session.cSearchQuestSessionInfo, val: System.Boolean)
+---@field get_Rescure fun(self: app.net_quest_session.cSearchQuestSessionInfo): System.Boolean
 ---@field set_IsSameLanguage fun(self: app.net_quest_session.cSearchQuestSessionInfo, val: System.Boolean)
 ---@field set_IsSamePlatform fun(self: app.net_quest_session.cSearchQuestSessionInfo, val: System.Boolean)
 ---@field set_IsLink fun(self: app.net_quest_session.cSearchQuestSessionInfo, val: System.Boolean)

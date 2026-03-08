@@ -22,7 +22,12 @@ local function get_network_response(args)
 end
 
 function this.search_pre(args)
-    if config.current.mod.enabled and not routine_search.has_instance() then
+    if not config.current.mod.enabled then
+        return
+    end
+
+    local search_info = sdk.to_managed_object(args[3]) --[[@as app.net_quest_session.cSearchQuestSessionInfo]]
+    if search_info:get_Rescure() and not routine_search.has_instance() then
         local search_ctrl = sdk.to_managed_object(args[2]) --[[@as app.cGUI050000QuestSearchWindowCtrl]]
         search_ctrl._SearchState = e.get("app.cGUI050000QuestSearchWindowCtrl.SEARCH_STATE").NONE
 
