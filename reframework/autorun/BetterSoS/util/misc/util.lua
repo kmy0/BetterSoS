@@ -242,13 +242,12 @@ function this.make_backoff(base_delay, max_delay, jitter)
         attempt = attempt + 1
 
         local delay = math.min(base_delay * (2 ^ (attempt - 1)), max_delay)
+        if delay >= max_delay then
+            attempt = 0
+        end
 
         if jitter then
             delay = delay * (0.5 + math.random() * 0.5) --[[@as integer]]
-        end
-
-        if delay >= max_delay then
-            attempt = 0
         end
 
         return delay
