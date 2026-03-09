@@ -308,7 +308,7 @@ function this.get_search_info()
     ret:set_IsSameLanguage(params.RescueSearchLanguage == 0)
     ret:set_IsSamePlatform(params.RescueSearchPlatform == 1)
     ret:set_NeedMemberNum(-1)
-    ret.FieldId = -1
+    ret.FieldId = params.RescueSearchFieldID
 
     return ret
 end
