@@ -366,15 +366,6 @@ function RoutineSearchQuest:_start_quest()
     self:_set_state(this.state.SUCCESS)
 end
 
-function RoutineSearchQuest:_go_quest()
-    if self._mode == this.mode.AUTO_START_GO then
-        local quest_director = s.get("app.MissionManager"):get_QuestDirector()
-        quest_director:goQuest(false, false, true, false)
-    end
-
-    self:_set_state(this.state.SUCCESS)
-end
-
 function RoutineSearchQuest:_success()
     if self._mode == this.mode.AUTO_START_GO or self._mode == this.mode.AUTO_START then
         util_mod.close_all_menu()
