@@ -92,6 +92,7 @@
 ---@field SearchResult ace.cLimitedArray<app.net_session_manager.SessionManager.cSearchResultQuest>
 
 ---@class app.net_session_manager.SessionManager.cSearchResultQuest : via.clr.ManagedObject
+---@field getHostHunterInfo fun(self: app.net_session_manager.SessionManager.cSearchResultQuest): app.net_session_manager.SessionManager.cSearchResultQuest.HunterInfo
 ---@field questId app.MissionIDList.ID
 ---@field memberNum System.Int32
 ---@field maxMemberNum System.Int32
@@ -252,3 +253,6 @@
 
 ---@class app.NetworkErrorManager : via.clr.ManagedObject
 ---@field ConvertNetworkErrorMessage fun(self: app.NetworkErrorManager, error_code: System.Int32, response: System.Array<System.Byte>): System.ValueTuple<app.NETWORK_ERROR_CODE,System.Guid,System.Array<app.NetworkErrorParamsBase>,System.Boolean>
+
+---@class app.net_session_manager.SessionManager.cSearchResultQuest.HunterInfo : System.ValueType
+---@field hr System.Int32

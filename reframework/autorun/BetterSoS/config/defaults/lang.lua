@@ -83,6 +83,8 @@ return {
         slider_text_player_max = "With fewer than %s max %s %s available",
         slider_text_rank_lower = "Easier than %s%s",
         slider_text_rank_upper = "Harder than %s%s",
+        slider_text_host_hr_lower = "With host hunter rank below %s",
+        slider_text_host_hr_upper = "With host hunter rank above %s",
         box_auto_pick_quest = "Pick Quest",
         box_auto_start_quest = "Accept Quest",
         box_auto_search = "Search",

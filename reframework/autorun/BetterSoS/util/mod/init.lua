@@ -39,6 +39,8 @@ function this.make_quest_filter()
         player_max = config_mod.ignore_player_max and config_mod.slider_player_max or nil,
         rank_lower = config_mod.ignore_rank_lower and config_mod.slider_rank_lower or nil,
         rank_upper = config_mod.ignore_rank_upper and config_mod.slider_rank_upper or nil,
+        host_hr_lower = config_mod.ignore_host_hr_lower and config_mod.slider_host_hr_lower or nil,
+        host_hr_upper = config_mod.ignore_host_hr_upper and config_mod.slider_host_hr_upper or nil,
         map = config_mod.ignore_map and util_table.map_table(config_mod.map, function(o)
             return tonumber(o)
         end) or nil,
@@ -124,6 +126,18 @@ function this.predicate_quest(quest, quest_filter)
         or (quest_filter.rank_upper and quest.questLevel > quest_filter.rank_upper)
     then
         return false
+    end
+
+    if quest_filter.host_hr_lower or quest_filter.host_hr_upper then
+        local host = quest:getHostHunterInfo()
+        local hr = host.hr
+
+        if
+            (quest_filter.host_hr_lower and hr < quest_filter.host_hr_lower)
+            or quest_filter.host_hr_upper and hr > quest_filter.host_hr_upper
+        then
+            return false
+        end
     end
 
     if

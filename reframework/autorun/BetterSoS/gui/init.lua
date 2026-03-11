@@ -191,6 +191,24 @@ local function draw_quest_attr()
             config.lang:tr("misc.text_star")
         )
     )
+    draw_ignore_slider(
+        "host_hr_lower",
+        1,
+        config.max_hr,
+        string.format(
+            config.lang:tr("mod.slider_text_host_hr_lower"),
+            config_mod.slider_host_hr_lower
+        )
+    )
+    draw_ignore_slider(
+        "host_hr_upper",
+        1,
+        config.max_hr,
+        string.format(
+            config.lang:tr("mod.slider_text_host_hr_upper"),
+            config_mod.slider_host_hr_upper
+        )
+    )
     draw_chips("type")
     draw_chips("multiplay_setting")
 
