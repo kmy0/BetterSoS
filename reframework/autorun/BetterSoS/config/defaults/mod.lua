@@ -21,6 +21,8 @@
 ---@field ignore_monster_species boolean
 ---@field ignore_monster_state boolean
 ---@field ignore_monster_target boolean
+---@field ignore_monster_grade_lower boolean
+---@field ignore_monster_grade_upper boolean
 ---@field ignore_map boolean
 ---@field ignore_type boolean
 ---@field ignore_environ boolean
@@ -43,6 +45,8 @@
 ---@field slider_rank_upper integer
 ---@field slider_host_hr_lower integer
 ---@field slider_host_hr_upper integer
+---@field slider_monster_grade_lower integer
+---@field slider_monster_grade_upper integer
 ---@field combo_quest_start integer
 ---@field combo_ignore_monster integer
 ---@field combo_ignore_map integer
@@ -91,6 +95,8 @@ return {
         ignore_monster_state = false,
         ignore_monster_target = false,
         ignore_monster_species = false,
+        ignore_monster_grade_lower = false,
+        ignore_monster_grade_upper = false,
         ignore_type = false,
         ignore_environ = false,
         ignore_multiplay_setting = false,
@@ -112,6 +118,8 @@ return {
         slider_rank_upper = 1,
         slider_host_hr_lower = 1,
         slider_host_hr_upper = 1,
+        slider_monster_grade_lower = 1,
+        slider_monster_grade_upper = 1,
         combo_quest_start = 1,
         combo_ignore_monster = 1,
         combo_ignore_map = 1,

@@ -69,6 +69,12 @@ function this.make_quest_filter()
                     return tonumber(o)
                 end)
             or nil,
+        monster_grade_lower = config_mod.ignore_monster_grade_lower
+                and config_mod.slider_monster_grade_lower
+            or nil,
+        monster_grade_upper = config_mod.ignore_monster_grade_upper
+                and config_mod.slider_monster_grade_upper
+            or nil,
         boost = config_mod.require_boost,
         item_wishlist = config_mod.require_item_wishlist,
         item_wishlist_any = config_mod.require_item_wishlist_any,
@@ -158,10 +164,30 @@ function this.predicate_quest(quest, quest_filter)
         end
     end
 
-    if quest_filter.monster or quest_filter.monster_state or quest_filter.monster_species then
+    if
+        quest_filter.monster
+        or quest_filter.monster_state
+        or quest_filter.monster_species
+        or quest_filter.monster_grade_lower
+        or quest_filter.monster_grade_upper
+    then
         ---@type boolean?
         local match
         util_game.do_something_limited(quest.targetMonster, function(_, _, value)
+            if
+                (
+                    quest_filter.monster_grade_lower
+                    and value.Grade < quest_filter.monster_grade_lower
+                )
+                or (
+                    quest_filter.monster_grade_upper
+                    and value.Grade > quest_filter.monster_grade_upper
+                )
+            then
+                match = true
+                return false
+            end
+
             if
                 (quest_filter.monster and quest_filter.monster[value.Id])
                 or (

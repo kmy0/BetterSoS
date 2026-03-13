@@ -10,6 +10,7 @@ return {
         text_star = "★",
         text_frame = "Frame",
         text_frame_plural = "Frames",
+        text_diamond = "♦",
     },
     menu = {
         config = {
@@ -85,6 +86,8 @@ return {
         slider_text_rank_upper = "Harder than %s%s",
         slider_text_host_hr_lower = "With host hunter rank below %s",
         slider_text_host_hr_upper = "With host hunter rank above %s",
+        slider_text_monster_grade_lower = "Below %s%s",
+        slider_text_monster_grade_upper = "Above %s%s",
         box_auto_pick_quest = "Pick Quest",
         box_auto_start_quest = "Accept Quest",
         box_auto_search = "Search",

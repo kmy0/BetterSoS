@@ -29,6 +29,8 @@
 ---@field monster_state table<string, boolean>?
 ---@field monster_species table<app.EnemyDef.SPECIES, boolean>?
 ---@field monster table<app.EnemyDef.ID, boolean>?
+---@field monster_grade_lower integer?
+---@field monster_grade_upper integer?
 ---@field type table<app.MissionTypeList.TYPE, boolean>?
 ---@field environ table<app.EnvironmentType.ENVIRONMENT, boolean>?
 ---@field boost boolean

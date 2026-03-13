@@ -216,11 +216,34 @@ local function draw_quest_attr()
 end
 
 local function draw_monster()
+    local config_mod = config.current.mod
+
     util_imgui.separator_text(
         config.lang:tr("mod.category_ignore_monster"),
         nil,
         nil,
         mod_map.colors.blue
+    )
+
+    draw_ignore_slider(
+        "monster_grade_lower",
+        1,
+        config.max_grade,
+        string.format(
+            config.lang:tr("mod.slider_text_monster_grade_lower"),
+            config_mod.slider_monster_grade_lower,
+            config.lang:tr("misc.text_diamond")
+        )
+    )
+    draw_ignore_slider(
+        "monster_grade_upper",
+        1,
+        config.max_grade,
+        string.format(
+            config.lang:tr("mod.slider_text_monster_grade_upper"),
+            config_mod.slider_monster_grade_upper,
+            config.lang:tr("misc.text_diamond")
+        )
     )
     draw_chips("monster")
     draw_chips("monster_species")

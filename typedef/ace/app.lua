@@ -140,6 +140,7 @@
 ---@field Id System.Int32
 ---@field LegendaryId System.Int32
 ---@field RoleId System.Int32
+---@field Grade System.Int32
 
 ---@class app.savedata.cItemWork : ace.cSaveDataParam
 ---@field get_ItemId fun(self: app.savedata.cItemWork): app.ItemDef.ID
