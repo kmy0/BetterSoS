@@ -83,6 +83,19 @@ m.hook(
     "app.NetworkRequestManager.joinSessionCallback(System.Boolean, System.Int32, System.Byte[])",
     hook.join_callback_pre
 )
+m.hook(
+    m.t_get(
+        "app.cGUI050000MemberSettingItemData.cQuestDifficultyData",
+        ".ctor(System.Guid, app.GUI050000PartsBase)"
+    ),
+    util.ref.capture_this,
+    hook.inject_item_post
+)
+m.hook(
+    "app.cGUI050000MemberSettingItemData.cQuestDifficultyData.updateEnableIndexList()",
+    util.ref.capture_this,
+    hook.enable_index_post
+)
 
 re.on_draw_ui(function()
     if imgui.button(string.format("%s %s", config.name, config.commit)) and init.ok then

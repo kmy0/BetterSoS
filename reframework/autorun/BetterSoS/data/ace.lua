@@ -6,6 +6,7 @@
 ---@field guid_no_quests string
 ---@field guid_close string
 ---@field guid_join_quest string
+---@field guid_any string
 ---@field maps app.FieldDef.STAGE[]
 ---@field judge_items app.ItemDef.ID[]
 ---@field special_items app.ItemDef.ID[]
@@ -31,6 +32,7 @@ local this = {
         guid_no_quests = "5861a854-56ed-4ebc-8650-2f6d0170c47d",
         guid_close = "a1b5007e-66b6-4c36-b8be-9434dae0386a",
         guid_join_quest = "85b834d2-6bcf-473c-9c2e-8ec117ad6de7",
+        guid_any = "8fee14a2-10f0-41a2-8c40-72a029623bbc",
         maps = {},
         judge_items = {},
         special_items = {},

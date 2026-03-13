@@ -1,11 +1,15 @@
 local ace_player = require("BetterSoS.util.ace.player")
 local config = require("BetterSoS.config.init")
+local data = require("BetterSoS.data.init")
 local e = require("BetterSoS.util.game.enum")
 local m = require("BetterSoS.util.ref.methods")
 local routine_search = require("BetterSoS.better_sos.routine_search")
 local s = require("BetterSoS.util.ref.singletons")
+local util_game = require("BetterSoS.util.game.init")
 local util_mod = require("BetterSoS.util.mod.init")
 local util_ref = require("BetterSoS.util.ref.init")
+
+local ace_map = data.ace.map
 
 local this = {}
 local search_trigger = false
@@ -96,6 +100,41 @@ function this.join_callback_pre(args)
         local o = routine_search.get_instance()
         local success, network_error = get_network_response(args)
         o:join_callback(success, network_error)
+    end
+end
+
+function this.inject_item_post(_)
+    if not config.current.mod.enabled then
+        return
+    end
+
+    local o = util_ref.get_this() --[[@as app.cGUI050000MemberSettingItemData.cQuestDifficultyData]]
+    local choice_value = util_game.system_array_to_lua(o.ChoiceValueList)
+    local choice_dif = util_game.system_array_to_lua(o.ChoiceDifficultyList)
+    local choice_name = util_game.system_array_to_lua(o.ChoiseNameTextList)
+    local guid_any = util_game.parse_guid(ace_map.guid_any)
+
+    table.insert(choice_dif, -1)
+    table.insert(choice_name, util_game.lang.get_message_local2(guid_any))
+    table.insert(choice_value, -1)
+
+    o.ChoiceDifficultyList = util_game.lua_array_to_system_array(
+        choice_dif,
+        "app.QuestDef.QUEST_DIFFICULTY_RESCUE_SEARCH_PARAM"
+    )
+    o.ChoiseNameTextList = util_game.lua_array_to_system_array(choice_name, "System.String")
+    o.ChoiceValueList = util_game.lua_array_to_system_array(choice_value, "System.Int32")
+end
+
+function this.enable_index_post(_)
+    if not config.current.mod.enabled then
+        return
+    end
+
+    local o = util_ref.get_this() --[[@as app.cGUI050000MemberSettingItemData.cQuestDifficultyData]]
+    local index = o.ChoiceValueList:IndexOf(-1)
+    if index and not o.ActualEnableIndexList:Contains(-1) then
+        o.ActualEnableIndexList:Insert(0, index)
     end
 end
 

@@ -24,6 +24,7 @@
 ---@class app.CharacterBase : app.AppBehavior
 ---@class app.NetworkRequest : via.clr.ManagedObject
 ---@class app.NetworkErrorParamsBase : via.clr.ManagedObject
+---@class app.cGUI050000MemberSettingItemData.cData : via.clr.ManagedObject
 
 ---@class app.net_quest_session.cSearchQuestSessionInfo : app.net_session_manager.cSearchSessionInfo
 ---@field set_Rescure fun(self: app.net_quest_session.cSearchQuestSessionInfo, val: System.Boolean)
@@ -256,3 +257,9 @@
 
 ---@class app.net_session_manager.SessionManager.cSearchResultQuest.HunterInfo : System.ValueType
 ---@field hr System.Int32
+
+---@class app.cGUI050000MemberSettingItemData.cQuestDifficultyData : app.cGUI050000MemberSettingItemData.cData
+---@field ChoiceDifficultyList System.Array<app.QuestDef.QUEST_DIFFICULTY_RESCUE_SEARCH_PARAM>
+---@field ChoiseNameTextList System.Array<System.String>
+---@field ChoiceValueList System.Array<System.Int32>
+---@field ActualEnableIndexList System.Array<System.Int32>
