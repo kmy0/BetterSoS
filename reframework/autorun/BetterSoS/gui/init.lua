@@ -26,7 +26,7 @@ local this = {
     },
 }
 
----@param key "map" | "monster" | "type" | "monster_species" | "monster_state" | "monster_target" | "environ" | "multiplay_setting"
+---@param key "map" | "monster" | "type" | "monster_species" | "monster_state" | "monster_target" | "environ" | "multiplay_setting" | "rank" | "monster_grade"
 local function draw_chips(key)
     local config_mod = config.current.mod
     local combo = state.combo[key] --[[@as Combo]]
@@ -128,7 +128,7 @@ local function draw_quest_attr()
     draw_ignore_slider(
         "time",
         1,
-        config.max_time,
+        ace_map.max_time,
         string.format(
             config.lang:tr("mod.slider_text_time"),
             config_mod.slider_time,
@@ -139,7 +139,7 @@ local function draw_quest_attr()
     draw_ignore_slider(
         "time_limit",
         1,
-        config.max_time,
+        ace_map.max_time,
         string.format(
             config.lang:tr("mod.slider_text_time_limit"),
             config_mod.slider_time_limit,
@@ -150,7 +150,7 @@ local function draw_quest_attr()
     draw_ignore_slider(
         "player",
         2,
-        config.max_player - 1,
+        ace_map.max_player - 1,
         string.format(
             config.lang:tr("mod.slider_text_player"),
             config_mod.slider_player,
@@ -162,7 +162,7 @@ local function draw_quest_attr()
     draw_ignore_slider(
         "player_max",
         2,
-        config.max_player,
+        ace_map.max_player,
         string.format(
             config.lang:tr("mod.slider_text_player_max"),
             config_mod.slider_player_max,
@@ -172,29 +172,9 @@ local function draw_quest_attr()
         )
     )
     draw_ignore_slider(
-        "rank_lower",
-        1,
-        ace_map.max_quest_rank,
-        string.format(
-            config.lang:tr("mod.slider_text_rank_lower"),
-            config_mod.slider_rank_lower,
-            config.lang:tr("misc.text_star")
-        )
-    )
-    draw_ignore_slider(
-        "rank_upper",
-        1,
-        ace_map.max_quest_rank,
-        string.format(
-            config.lang:tr("mod.slider_text_rank_upper"),
-            config_mod.slider_rank_upper,
-            config.lang:tr("misc.text_star")
-        )
-    )
-    draw_ignore_slider(
         "host_hr_lower",
         1,
-        config.max_hr,
+        ace_map.max_hr,
         string.format(
             config.lang:tr("mod.slider_text_host_hr_lower"),
             config_mod.slider_host_hr_lower
@@ -203,12 +183,13 @@ local function draw_quest_attr()
     draw_ignore_slider(
         "host_hr_upper",
         1,
-        config.max_hr,
+        ace_map.max_hr,
         string.format(
             config.lang:tr("mod.slider_text_host_hr_upper"),
             config_mod.slider_host_hr_upper
         )
     )
+    draw_chips("rank")
     draw_chips("type")
     draw_chips("multiplay_setting")
 
@@ -216,8 +197,6 @@ local function draw_quest_attr()
 end
 
 local function draw_monster()
-    local config_mod = config.current.mod
-
     util_imgui.separator_text(
         config.lang:tr("mod.category_ignore_monster"),
         nil,
@@ -225,26 +204,7 @@ local function draw_monster()
         mod_map.colors.blue
     )
 
-    draw_ignore_slider(
-        "monster_grade_lower",
-        1,
-        config.max_grade,
-        string.format(
-            config.lang:tr("mod.slider_text_monster_grade_lower"),
-            config_mod.slider_monster_grade_lower,
-            config.lang:tr("misc.text_diamond")
-        )
-    )
-    draw_ignore_slider(
-        "monster_grade_upper",
-        1,
-        config.max_grade,
-        string.format(
-            config.lang:tr("mod.slider_text_monster_grade_upper"),
-            config_mod.slider_monster_grade_upper,
-            config.lang:tr("misc.text_diamond")
-        )
-    )
+    draw_chips("monster_grade")
     draw_chips("monster")
     draw_chips("monster_species")
     draw_chips("monster_state")

@@ -5,11 +5,6 @@
 ---@field lang Language
 ---@field gui GuiConfig
 ---
----@field max_player integer
----@field max_time integer
----@field max_hr integer
----@field max_grade integer
----
 ---@field version string
 ---@field commit string
 ---@field name string
@@ -29,11 +24,6 @@ local this = config_base:new(require("BetterSoS.config.defaults.mod"), config_pa
 this.version = version.version
 this.commit = version.commit
 this.name = mod_name
-
-this.max_time = 50
-this.max_player = 4
-this.max_hr = 999
-this.max_grade = 5
 
 this.gui = config_base:new(
     require("BetterSoS.config.defaults.gui"),

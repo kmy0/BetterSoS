@@ -9,6 +9,7 @@ local m = require("BetterSoS.util.ref.methods")
 local s = require("BetterSoS.util.ref.singletons")
 local util_game = require("BetterSoS.util.game.init")
 local util_misc = require("BetterSoS.util.misc.init")
+local util_ref = require("BetterSoS.util.ref.init")
 local util_table = require("BetterSoS.util.misc.table")
 
 local ace_map = this.ace.map
@@ -64,9 +65,14 @@ end
 local function make_maps()
     ---@type app.FieldDef.STAGE[]
     local ret = {}
+    -- 10 = Rimechain Peak, 11 = Dragontorch Shrine, 13 = Forgotten Machineworks
+    local non_main_stages = { 10, 11, 13 }
     for _, stage in e.iter("app.FieldDef.STAGE") do
-        -- 10 = Rimechain Peak, 11 = Dragontorch Shrine
-        if stage == 10 or stage == 11 or m.isMainStage(stage) or m.isArenaStage(stage) then
+        if
+            m.isMainStage(stage)
+            or m.isArenaStage(stage)
+            or util_table.contains(non_main_stages, stage)
+        then
             table.insert(ret, stage)
         end
     end
@@ -122,7 +128,7 @@ end
 
 ---@return app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING[]
 local function make_multiplay_setting()
-    ---@type app.EnemyDef.SPECIES[]
+    ---@type app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING[]
     local ret = {}
     for _, setting in e.iter("app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING") do
         table.insert(ret, setting)
@@ -205,13 +211,27 @@ function this.get_camp_distances(stage, areas, camp_ids)
     return ret
 end
 
----@return app.QuestDef.EM_REWARD_RANK
-local function get_max_quest_rank()
-    local ret = 0
+---@return integer[]
+local function make_ranks()
+    ---@type integer[]
+    local ret = {}
     for _, rank in e.iter("app.QuestDef.EM_REWARD_RANK") do
-        ret = math.max(ret, rank)
+        table.insert(ret, rank)
     end
-    return ret
+
+    return util_table.sort(ret)
+end
+
+---@return integer[]
+local function make_grades()
+    local max_grade = util_ref.types.get("app.EnemyDef"):get_field("MaxRewardGrade"):get_data() --[[@as integer]]
+    ---@type integer[]
+    local ret = {}
+    for i = 1, max_grade do
+        table.insert(ret, i)
+    end
+
+    return util_table.sort(ret)
 end
 
 ---@return app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE[], table<app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE, app.MissionTypeList.TYPE[]>
@@ -267,10 +287,13 @@ function this.init()
     ace_map.monster_species = make_species()
     ace_map.environ = make_environ()
     ace_map.maps = make_maps()
-    ace_map.max_quest_rank = get_max_quest_rank()
+    ace_map.ranks = make_ranks()
+    ace_map.grades = make_grades()
     ace_map.quest_type, ace_map.quest_type_map = make_search_type_to_quest_type()
     ace_map.SmartCampPicker_data = make_SmartCampPicker_data()
     ace_map.multiplay_setting = make_multiplay_setting()
+    ace_map.max_hr =
+        util_ref.types.get("app.BasicParamUtil"):get_field("MAX_HUNTER_RANK"):get_data()--[[@as integer]]
 
     return true
 end

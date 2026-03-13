@@ -19,8 +19,7 @@
 ---@field time_limit integer?
 ---@field player integer?
 ---@field player_max integer?
----@field rank_lower integer?
----@field rank_upper integer?
+---@field rank table<integer, boolean>?
 ---@field host_hr_lower integer?
 ---@field host_hr_upper integer?
 ---@field multiplay_setting table<app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING, boolean>?
@@ -29,8 +28,7 @@
 ---@field monster_state table<string, boolean>?
 ---@field monster_species table<app.EnemyDef.SPECIES, boolean>?
 ---@field monster table<app.EnemyDef.ID, boolean>?
----@field monster_grade_lower integer?
----@field monster_grade_upper integer?
+---@field monster_grade table<integer, boolean>?
 ---@field type table<app.MissionTypeList.TYPE, boolean>?
 ---@field environ table<app.EnvironmentType.ENVIRONMENT, boolean>?
 ---@field boost boolean

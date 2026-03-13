@@ -15,14 +15,12 @@
 ---@field ignore_time_limit boolean
 ---@field ignore_player boolean
 ---@field ignore_player_max boolean
----@field ignore_rank_lower boolean
----@field ignore_rank_upper boolean
+---@field ignore_rank boolean
 ---@field ignore_monster boolean
 ---@field ignore_monster_species boolean
 ---@field ignore_monster_state boolean
 ---@field ignore_monster_target boolean
----@field ignore_monster_grade_lower boolean
----@field ignore_monster_grade_upper boolean
+---@field ignore_monster_grade boolean
 ---@field ignore_map boolean
 ---@field ignore_type boolean
 ---@field ignore_environ boolean
@@ -41,12 +39,10 @@
 ---@field slider_time_limit integer
 ---@field slider_player integer
 ---@field slider_player_max integer
----@field slider_rank_lower integer
----@field slider_rank_upper integer
 ---@field slider_host_hr_lower integer
 ---@field slider_host_hr_upper integer
----@field slider_monster_grade_lower integer
----@field slider_monster_grade_upper integer
+---@field combo_ignore_rank integer
+---@field combo_ignore_monster_grade integer
 ---@field combo_quest_start integer
 ---@field combo_ignore_monster integer
 ---@field combo_ignore_map integer
@@ -64,6 +60,8 @@
 ---@field map table<string, integer>
 ---@field type table<string, integer>
 ---@field environ table<string, integer>
+---@field rank table<string, integer>
+---@field monster_grade table<string, integer>
 ---@field multiplay_setting table<string, integer>
 ---@field bind {
 ---     action: BindBase[],
@@ -87,16 +85,14 @@ return {
         ignore_time = false,
         ignore_time_limit = false,
         ignore_player = false,
-        ignore_rank_lower = false,
-        ignore_rank_upper = false,
+        ignore_rank = false,
         ignore_map = false,
         ignore_monster = false,
         ignore_player_max = false,
         ignore_monster_state = false,
         ignore_monster_target = false,
         ignore_monster_species = false,
-        ignore_monster_grade_lower = false,
-        ignore_monster_grade_upper = false,
+        ignore_monster_grade = false,
         ignore_type = false,
         ignore_environ = false,
         ignore_multiplay_setting = false,
@@ -114,12 +110,8 @@ return {
         slider_time_limit = 1,
         slider_player = 3,
         slider_player_max = 3,
-        slider_rank_lower = 1,
-        slider_rank_upper = 1,
         slider_host_hr_lower = 1,
         slider_host_hr_upper = 1,
-        slider_monster_grade_lower = 1,
-        slider_monster_grade_upper = 1,
         combo_quest_start = 1,
         combo_ignore_monster = 1,
         combo_ignore_map = 1,
@@ -130,6 +122,8 @@ return {
         combo_ignore_monster_target = 1,
         combo_ignore_environ = 1,
         combo_ignore_multiplay_setting = 1,
+        combo_ignore_monster_grade = 1,
+        combo_ignore_rank = 1,
         monster = {},
         map = {},
         type = {},
@@ -138,6 +132,8 @@ return {
         monster_state = {},
         environ = {},
         multiplay_setting = {},
+        rank = {},
+        monster_grade = {},
         bind = {
             action = {
                 {

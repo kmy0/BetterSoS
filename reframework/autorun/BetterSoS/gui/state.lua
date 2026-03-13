@@ -14,6 +14,8 @@
 ---@field environ Combo
 ---@field action Combo
 ---@field multiplay_setting Combo
+---@field rank Combo
+---@field monster_grade Combo
 
 ---@class (exact) NewBindListener
 ---@field opt string
@@ -167,6 +169,26 @@ local this = {
                 return config.lang:tr("mod.combo_ignore_multiplay_setting." .. name)
             end
         ),
+        rank = combo:new(
+            nil,
+            function(a, b)
+                return tonumber(a.key) < tonumber(b.key)
+            end,
+            nil,
+            function(key)
+                return key .. config.lang:tr("misc.text_star")
+            end
+        ),
+        monster_grade = combo:new(
+            nil,
+            function(a, b)
+                return tonumber(a.key) < tonumber(b.key)
+            end,
+            nil,
+            function(key)
+                return key .. config.lang:tr("misc.text_diamond")
+            end
+        ),
     },
 }
 
@@ -218,6 +240,12 @@ function this.init()
         util_table.map_array(ace_map.multiplay_setting),
         nil,
         util_table.keys(config_mod.multiplay_setting)
+    )
+    this.combo.rank:swap(util_table.map_array(ace_map.ranks), nil, util_table.keys(config_mod.rank))
+    this.combo.monster_grade:swap(
+        util_table.map_array(ace_map.grades),
+        nil,
+        util_table.keys(config_mod.monster_grade)
     )
 
     this.translate_combo()

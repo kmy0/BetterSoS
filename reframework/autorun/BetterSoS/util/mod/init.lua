@@ -37,8 +37,9 @@ function this.make_quest_filter()
         time_limit = config_mod.ignore_time_limit and config_mod.slider_time_limit or nil,
         player = config_mod.ignore_player and config_mod.slider_player or nil,
         player_max = config_mod.ignore_player_max and config_mod.slider_player_max or nil,
-        rank_lower = config_mod.ignore_rank_lower and config_mod.slider_rank_lower or nil,
-        rank_upper = config_mod.ignore_rank_upper and config_mod.slider_rank_upper or nil,
+        rank = config_mod.ignore_rank and util_table.map_table(config_mod.rank, function(o)
+            return tonumber(o)
+        end) or nil,
         host_hr_lower = config_mod.ignore_host_hr_lower and config_mod.slider_host_hr_lower or nil,
         host_hr_upper = config_mod.ignore_host_hr_upper and config_mod.slider_host_hr_upper or nil,
         map = config_mod.ignore_map and util_table.map_table(config_mod.map, function(o)
@@ -69,11 +70,10 @@ function this.make_quest_filter()
                     return tonumber(o)
                 end)
             or nil,
-        monster_grade_lower = config_mod.ignore_monster_grade_lower
-                and config_mod.slider_monster_grade_lower
-            or nil,
-        monster_grade_upper = config_mod.ignore_monster_grade_upper
-                and config_mod.slider_monster_grade_upper
+        monster_grade = config_mod.ignore_monster_grade
+                and util_table.map_table(config_mod.monster_grade, function(o)
+                    return tonumber(o)
+                end)
             or nil,
         boost = config_mod.require_boost,
         item_wishlist = config_mod.require_item_wishlist,
@@ -127,10 +127,7 @@ function this.predicate_quest(quest, quest_filter)
         return false
     end
 
-    if
-        (quest_filter.rank_lower and quest.questLevel < quest_filter.rank_lower)
-        or (quest_filter.rank_upper and quest.questLevel > quest_filter.rank_upper)
-    then
+    if quest_filter.rank and quest_filter.rank[quest.questLevel] then
         return false
     end
 
@@ -168,28 +165,14 @@ function this.predicate_quest(quest, quest_filter)
         quest_filter.monster
         or quest_filter.monster_state
         or quest_filter.monster_species
-        or quest_filter.monster_grade_lower
-        or quest_filter.monster_grade_upper
+        or quest_filter.monster_grade
     then
         ---@type boolean?
         local match
         util_game.do_something_limited(quest.targetMonster, function(_, _, value)
             if
-                (
-                    quest_filter.monster_grade_lower
-                    and value.Grade < quest_filter.monster_grade_lower
-                )
-                or (
-                    quest_filter.monster_grade_upper
-                    and value.Grade > quest_filter.monster_grade_upper
-                )
-            then
-                match = true
-                return false
-            end
-
-            if
-                (quest_filter.monster and quest_filter.monster[value.Id])
+                (quest_filter.monster_grade and quest_filter.monster_grade[value.Grade])
+                or (quest_filter.monster and quest_filter.monster[value.Id])
                 or (
                     quest_filter.monster_species
                     and quest_filter.monster_species[ace_map.monster_to_species[value.Id]]
