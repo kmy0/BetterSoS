@@ -11,6 +11,7 @@
 
 local config_base = require("BetterSoS.util.misc.config_base")
 local lang = require("BetterSoS.config.lang")
+local migration = require("BetterSoS.config.migration")
 local util_misc = require("BetterSoS.util.misc.init")
 local util_table = require("BetterSoS.util.misc.table")
 local version = require("BetterSoS.config.version")
@@ -38,13 +39,22 @@ this.lang = lang:new(
 
 function this:load()
     local loaded_config = json.load_file(self.path) --[[@as MainSettings?]]
+    ---@type string?
+    local current_version
     if loaded_config then
+        current_version = loaded_config.version
         self.current = util_table.merge_t(self.default, loaded_config)
 
         --FIXME: probably should deal with this at some point...
         self.current.mod.bind.action = loaded_config.mod.bind.action or {}
     else
+        current_version = self.commit
         self.current = util_table.deep_copy(self.default)
+        self:save_no_timer()
+    end
+
+    if migration.need_migrate(current_version, self.commit) then
+        migration.migrate(current_version, self.commit, self.current)
         self:save_no_timer()
     end
 end
