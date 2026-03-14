@@ -20,8 +20,7 @@
 ---@field player integer?
 ---@field player_max integer?
 ---@field rank table<integer, boolean>?
----@field host_hr_lower integer?
----@field host_hr_upper integer?
+---@field host_hr [integer, integer]?
 ---@field multiplay_setting table<app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING, boolean>?
 ---@field map table<app.FieldDef.STAGE, boolean>?
 ---@field monster_target table<MonsterTarget, boolean>?

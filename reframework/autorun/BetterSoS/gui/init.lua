@@ -113,6 +113,33 @@ local function draw_ignore_slider(id, min_val, max_val, display_text)
     imgui.end_disabled()
 end
 
+---@param id string
+---@param id_a string
+---@param id_b string
+---@param min_val integer
+---@param max_val integer
+---@param display_text string?
+local function draw_ignore_slider_range(id, id_a, id_b, min_val, max_val, display_text)
+    local config_mod = config.current.mod
+
+    set:checkbox("##box_ignore_" .. id, "mod.ignore_" .. id)
+    local disabled = not config_mod["ignore_" .. id]
+    imgui.begin_disabled(disabled)
+    imgui.same_line()
+
+    set:range_slider_int(
+        "##slider_" .. id,
+        string.format("mod.slider_%s_%s", id, id_a),
+        string.format("mod.slider_%s_%s", id, id_b),
+        min_val,
+        max_val,
+        nil,
+        display_text,
+        disabled
+    )
+    imgui.end_disabled()
+end
+
 local function draw_quest_attr()
     local config_mod = config.current.mod
 
@@ -171,21 +198,15 @@ local function draw_quest_attr()
                 or config.lang:tr("misc.text_slot_plural")
         )
     )
-    draw_ignore_slider(
-        "host_hr_lower",
+    draw_ignore_slider_range(
+        "host_hr",
+        "lower",
+        "upper",
         1,
         ace_map.max_hr,
         string.format(
-            config.lang:tr("mod.slider_text_host_hr_lower"),
-            config_mod.slider_host_hr_lower
-        )
-    )
-    draw_ignore_slider(
-        "host_hr_upper",
-        1,
-        ace_map.max_hr,
-        string.format(
-            config.lang:tr("mod.slider_text_host_hr_upper"),
+            config.lang:tr("mod.slider_text_host_hr"),
+            config_mod.slider_host_hr_lower,
             config_mod.slider_host_hr_upper
         )
     )

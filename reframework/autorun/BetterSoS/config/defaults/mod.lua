@@ -25,8 +25,7 @@
 ---@field ignore_type boolean
 ---@field ignore_environ boolean
 ---@field ignore_multiplay_setting boolean
----@field ignore_host_hr_lower boolean
----@field ignore_host_hr_upper boolean
+---@field ignore_host_hr boolean
 ---@field require_item_wishlist boolean
 ---@field require_item_judge boolean
 ---@field require_item_rare boolean
@@ -96,8 +95,7 @@ return {
         ignore_type = false,
         ignore_environ = false,
         ignore_multiplay_setting = false,
-        ignore_host_hr_lower = false,
-        ignore_host_hr_upper = false,
+        ignore_host_hr = false,
         require_item_wishlist = false,
         require_item_wishlist_any = false,
         require_item_judge = false,
@@ -111,7 +109,7 @@ return {
         slider_player = 3,
         slider_player_max = 3,
         slider_host_hr_lower = 1,
-        slider_host_hr_upper = 1,
+        slider_host_hr_upper = 999,
         combo_quest_start = 1,
         combo_ignore_monster = 1,
         combo_ignore_map = 1,
