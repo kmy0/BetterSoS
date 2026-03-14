@@ -16,6 +16,7 @@ return {
         config = {
             name = "Mod",
             enabled = "Enabled",
+            reset = "Reset Settings",
         },
         language = {
             name = "Language",

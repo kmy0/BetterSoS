@@ -52,6 +52,12 @@ local function draw_mod_menu()
         routine_search.abort()
     end
 
+    imgui.separator()
+
+    if util_imgui.menu_item(util_gui.tr("menu.config.reset"), nil, nil, true) then
+        config:restore()
+    end
+
     imgui.pop_style_var(1)
 end
 
