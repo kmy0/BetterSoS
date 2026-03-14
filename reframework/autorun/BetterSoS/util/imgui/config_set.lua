@@ -165,4 +165,25 @@ function this:range_slider_float(
     )
 end
 
+---@param id string
+---@param config_key string
+---@param options table<integer, string>
+---@param disabled_options table<integer, boolean>?
+---@param disabled boolean?
+---@param horizontal boolean?
+---@param fallback integer?
+---@return boolean
+function this:radio_group(id, config_key, options, disabled_options, disabled, horizontal, fallback)
+    return self:generic_config(
+        id,
+        config_key,
+        util_imgui.radio_group,
+        options,
+        disabled_options,
+        disabled,
+        horizontal,
+        fallback
+    )
+end
+
 return this

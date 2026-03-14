@@ -1,3 +1,4 @@
+local radio_group = require("BetterSoS.util.imgui.radio_group")
 local range_slider = require("BetterSoS.util.imgui.range_slider")
 local util_game = require("BetterSoS.util.game.init")
 local util_misc = require("BetterSoS.util.misc.init")
@@ -6,6 +7,7 @@ local uuid = require("BetterSoS.util.misc.uuid")
 local this = {
     range_slider_int = range_slider.range_slider_int,
     range_slider_float = range_slider.range_slider_float,
+    radio_group = radio_group.radio_group,
 }
 ---@type table<string, number>
 local child_window_sizes = {}
