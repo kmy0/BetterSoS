@@ -66,9 +66,15 @@ return {
             ABNORMAL = "Abnormal",
             FERTILITY = "Fertility",
         },
-        combo_quest_start = {
-            START_AND_DEPART = "Accept & Depart",
-            START_AND_PREP = "Accept & Prep",
+        radio_start_quest = {
+            PICK = "Pick Quest",
+            START_AND_DEPART = "Accept Quest & Depart",
+            START_AND_PREP = "Accept Quest & Prep",
+            DISABLED = "Disabled",
+        },
+        radio_search_quest = {
+            SEARCH = "Search Quest",
+            DISABLED = "Disabled",
         },
         combo_ignore_multiplay_setting = {
             PLAYER_WITH_NPC = "Players & Support Hunters",
@@ -86,9 +92,9 @@ return {
         box_auto_pick_quest = "Pick Quest",
         box_auto_start_quest = "Accept Quest",
         box_auto_search = "Search",
-        tooltip_auto_search = "Start searching immediately after returning from a quest",
+        tooltip_auto_search = "Start searching immediately after returning from a quest, requires Auto Accept or Auto Pick to be enabled",
         tooltip_item_rare = "'Shiny' items, plates, gems, etc.",
-        tooltip_auto_start_quest = "Requires Manual Accept, and Passcode filters to be enabled",
+        tooltip_auto_start_quest = "Auto Accept requires Manual Accept, and Passcode filters to be enabled",
         tooltip_investigations_only = "Investigations Only",
         tooltip_item_wishlist = "Bonus Rewards contain wishlisted item",
         tooltip_item_wishlist_any = "Any monster that can drop a wishlisted item (incl. guaranteed quest rewards & Investigation Bonus Rewards)",

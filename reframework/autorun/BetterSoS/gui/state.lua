@@ -7,7 +7,6 @@
 ---@field map Combo
 ---@field item Combo
 ---@field type Combo
----@field quest_start Combo
 ---@field monster_species Combo
 ---@field monster_target Combo
 ---@field monster_state Combo
@@ -86,17 +85,6 @@ local this = {
                 )[search_type]
                 local guid = util_game.parse_guid(ace_map.search_type_to_guid[search_name])
                 return game_lang.get_message_local2(guid)
-            end
-        ),
-        quest_start = combo:new(
-            nil,
-            function(a, b)
-                return a.value < b.value
-            end,
-            nil,
-            function(key)
-                local name = util_table.reverse_lookup(mod.enum.quest_start, tonumber(key))
-                return config.lang:tr("mod.combo_quest_start." .. name)
             end
         ),
         monster_species = combo:new(
@@ -215,7 +203,6 @@ function this.init()
         nil,
         util_table.keys(config_mod.type)
     )
-    this.combo.quest_start:swap(util_table.map_array(mod.enum.quest_start))
     this.combo.monster_species:swap(
         util_table.map_array(ace_map.monster_species),
         nil,

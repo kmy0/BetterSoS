@@ -496,18 +496,26 @@ function this.get_closest_starting_point(stage, target_em_area, camps)
     return camp_ids[closest_camp]
 end
 
+---@return boolean
 function this.is_auto_start_quest()
     local config_mod = config.current.mod
 
-    return config_mod.auto_start_quest
+    return (
+        config_mod.auto_start_quest == mod_enum.auto_start_quest.START_AND_DEPART
+        or config_mod.auto_start_quest == mod_enum.auto_start_quest.START_AND_PREP
+    )
         and config_mod.ignore_manualaccept
         and config_mod.ignore_passcode
 end
 
+---@return boolean
 function this.is_auto_search()
     local config_mod = config.current.mod
 
-    return (this.is_auto_start_quest() or config_mod.auto_pick_quest) and config_mod.auto_search
+    return (
+        this.is_auto_start_quest()
+        or config_mod.auto_start_quest == mod_enum.auto_start_quest.PICK
+    ) and config_mod.auto_search == mod_enum.auto_search_quest.SEARCH
 end
 
 ---@return RoutineSearchQuestMode
@@ -516,12 +524,12 @@ function this.get_search_mode()
     local routine_search = require("BetterSoS.better_sos.routine_search")
 
     if this.is_auto_start_quest() then
-        if config_mod.combo_quest_start == mod_enum.quest_start.START_AND_PREP then
+        if config_mod.auto_start_quest == mod_enum.auto_start_quest.START_AND_PREP then
             return routine_search.mode.AUTO_START
-        elseif config_mod.combo_quest_start == mod_enum.quest_start.START_AND_DEPART then
+        elseif config_mod.auto_start_quest == mod_enum.auto_start_quest.START_AND_DEPART then
             return routine_search.mode.AUTO_START_GO
         end
-    elseif config_mod.auto_pick_quest then
+    elseif config_mod.auto_start_quest == mod_enum.auto_start_quest.PICK then
         return routine_search.mode.AUTO_PICK
     end
 

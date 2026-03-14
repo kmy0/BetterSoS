@@ -12,11 +12,11 @@ local set = require("BetterSoS.util.imgui.config_set"):new(config)
 local state = require("BetterSoS.gui.state")
 local util_gui = require("BetterSoS.gui.util")
 local util_imgui = require("BetterSoS.util.imgui.init")
-local util_mod = require("BetterSoS.util.mod.init")
 local util_table = require("BetterSoS.util.misc.table")
 
 local ace_map = data.ace.map
 local mod_map = data.mod.map
+local mod_enum = data.mod.enum
 
 ---@class Gui
 local this = {
@@ -273,30 +273,46 @@ end
 
 local function draw_auto()
     local config_mod = config.current.mod
-    local is_auto_start = util_mod.is_auto_start_quest()
 
     util_imgui.separator_text(config.lang:tr("mod.category_auto"), nil, nil, mod_map.colors.blue)
-    imgui.begin_disabled(is_auto_start and config_mod.auto_start_quest)
-    set:checkbox(util_gui.tr("mod.box_auto_pick_quest"), "mod.auto_pick_quest")
-    imgui.end_disabled()
 
-    imgui.begin_disabled(
-        not config_mod.ignore_manualaccept
-            or not config_mod.ignore_passcode
-            or config_mod.auto_pick_quest
+    local auto_start_ok = config_mod.ignore_manualaccept and config_mod.ignore_passcode
+    set:radio_group(
+        "auto_start_quest_radio",
+        "mod.auto_start_quest",
+        util_table.map_table(mod_enum.auto_start_quest, function(o)
+            return mod_enum.auto_start_quest[o]
+        end, function(o)
+            local key = util_table.reverse_lookup(mod_enum.auto_start_quest, o)
+            return config.lang:tr("mod.radio_start_quest." .. key)
+        end),
+        {
+            [mod_enum.auto_start_quest.START_AND_DEPART] = not auto_start_ok,
+            [mod_enum.auto_start_quest.START_AND_PREP] = not auto_start_ok,
+        },
+        false,
+        true,
+        mod_enum.auto_start_quest.DISABLED
     )
-    set:checkbox(util_gui.tr("mod.box_auto_start_quest"), "mod.auto_start_quest")
-    imgui.end_disabled()
     util_imgui.tooltip(config.lang:tr("mod.tooltip_auto_start_quest"), true)
 
-    imgui.begin_disabled(not is_auto_start or config_mod.auto_pick_quest)
-    imgui.same_line()
-    set:combo("##combo_quest_accept", "mod.combo_quest_start", state.combo.quest_start.values)
-    imgui.end_disabled()
-
-    imgui.begin_disabled(not is_auto_start and not config_mod.auto_pick_quest)
-    set:checkbox(util_gui.tr("mod.box_auto_search"), "mod.auto_search")
-    imgui.end_disabled()
+    local auto_search_ok = config_mod.auto_start_quest ~= mod_enum.auto_start_quest.DISABLED
+    set:radio_group(
+        "auto_search_quest_radio",
+        "mod.auto_search",
+        util_table.map_table(mod_enum.auto_search_quest, function(o)
+            return mod_enum.auto_search_quest[o]
+        end, function(o)
+            local key = util_table.reverse_lookup(mod_enum.auto_search_quest, o)
+            return config.lang:tr("mod.radio_search_quest." .. key)
+        end),
+        {
+            [mod_enum.auto_search_quest.SEARCH] = not auto_search_ok,
+        },
+        false,
+        true,
+        mod_enum.auto_search_quest.DISABLED
+    )
     util_imgui.tooltip(config.lang:tr("mod.tooltip_auto_search"), true)
 end
 
@@ -341,11 +357,11 @@ function this.draw()
     imgui.indent(3)
 
     imgui.begin_disabled(not config_mod.enabled)
+    draw_auto()
     draw_quest_attr()
     draw_monster()
     draw_map()
     draw_item()
-    draw_auto()
     imgui.end_disabled()
 
     if config.lang.font then

@@ -8,9 +8,10 @@
 ---@field actions table<string, string>
 
 ---@class (exact) ModEnum
----@field quest_start QuestStartType.*
+---@field auto_start_quest QuestStartType.*
 ---@field monster_state MonsterState.*
 ---@field monster_target MonsterTarget.*
+---@field auto_search_quest QuestSearchType.*
 
 ---@class (exact) QuestFilter
 ---@field passcode boolean
@@ -57,9 +58,16 @@ local this = {
 }
 
 ---@enum QuestStartType
-this.enum.quest_start = { ---@class QuestStartType.* : {[string]: integer}
-    START_AND_DEPART = 1,
-    START_AND_PREP = 2,
+this.enum.auto_start_quest = { ---@class QuestStartType.* : {[string]: integer}
+    DISABLED = 1,
+    PICK = 2,
+    START_AND_DEPART = 3,
+    START_AND_PREP = 4,
+}
+---@enum QuestSearchType
+this.enum.auto_search_quest = { ---@class QuestSearchType.* : {[string]: integer}
+    DISABLED = 1,
+    SEARCH = 2,
 }
 ---@enum MonsterState
 this.enum.monster_state = { ---@class MonsterState.* : {[string]: integer}

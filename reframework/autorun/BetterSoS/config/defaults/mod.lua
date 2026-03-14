@@ -31,9 +31,8 @@
 ---@field require_item_rare boolean
 ---@field require_item_wishlist_any boolean
 ---@field require_boost boolean
----@field auto_pick_quest boolean
----@field auto_start_quest boolean
----@field auto_search boolean
+---@field auto_start_quest integer -- QuestStartType
+---@field auto_search integer -- QuestSearchType
 ---@field slider_time integer
 ---@field slider_time_limit integer
 ---@field slider_player integer
@@ -42,7 +41,6 @@
 ---@field slider_host_hr_upper integer
 ---@field combo_ignore_rank integer
 ---@field combo_ignore_monster_grade integer
----@field combo_quest_start integer
 ---@field combo_ignore_monster integer
 ---@field combo_ignore_map integer
 ---@field combo_item_judge integer
@@ -101,16 +99,14 @@ return {
         require_item_judge = false,
         require_item_rare = false,
         require_boost = false,
-        auto_pick_quest = false,
-        auto_start_quest = false,
-        auto_search = false,
+        auto_start_quest = 1,
+        auto_search = 1,
         slider_time = 1,
         slider_time_limit = 1,
         slider_player = 3,
         slider_player_max = 3,
         slider_host_hr_lower = 1,
         slider_host_hr_upper = 999,
-        combo_quest_start = 1,
         combo_ignore_monster = 1,
         combo_ignore_map = 1,
         combo_item_judge = 1,
