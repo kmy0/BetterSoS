@@ -254,4 +254,12 @@ function this.make_backoff(base_delay, max_delay, jitter)
     end
 end
 
+---@param col integer
+---@param factor number 0.0 - 1.0
+---@return integer
+function this.mul_alpha(col, factor)
+    local a = math.floor(((col >> 24) & 0xFF) * factor)
+    return (col & 0x00FFFFFF) | (a << 24)
+end
+
 return this

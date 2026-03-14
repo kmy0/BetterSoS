@@ -1,0 +1,320 @@
+local util_misc = require("BetterSoS.util.misc.init")
+
+local this = {}
+---@type table<string, string>
+local drag_state = {}
+---@type table<string, string>
+local input_state = {}
+
+local COL_FRAME_BG = 0xff3f3535
+local COL_GRAB = 0xFFE0853D
+local COL_GRAB_ACT = 0xFFFA9642
+local COL_TEXT = 0xFFFFFFFF
+local COL_FRAME_BG_HOVERED = 0xff4f4e4d
+local COL_FRAME_BG_ACTIVE = 0xff8d8c8c
+
+local FRAME_PADDING_Y = 3.0
+local GRAB_MIN_SIZE = 12.0
+local DISABLED_ALPHA = 0.6
+local ITEM_PADDING_Y = 2.0
+
+---@param str string
+---@param v_min number
+---@param v_max number
+---@return number?, number?
+local function parse_range(str, v_min, v_max)
+    local a, b = str:match("^%s*([%d%.%-]+)%s*,%s*([%d%.%-]+)%s*$")
+    a, b = tonumber(a), tonumber(b)
+    if not a or not b then
+        return nil, nil
+    end
+    a = math.max(v_min, math.min(a, v_max))
+    b = math.max(v_min, math.min(b, v_max))
+    a = math.min(a, b)
+    b = math.max(a, b)
+    return a, b
+end
+
+---@param label string
+---@param v_lo number
+---@param v_hi number
+---@param v_min number
+---@param v_max number
+---@param display_format string?
+---@param display_text string?
+---@param disabled boolean?
+---@param step number?
+---@return boolean, number, number
+local function range_slider(
+    label,
+    v_lo,
+    v_hi,
+    v_min,
+    v_max,
+    display_format,
+    display_text,
+    disabled,
+    step
+)
+    display_format = display_format or "%.1f"
+    v_min = v_min or 0.0
+    v_max = v_max or 1.0
+
+    local changed = false
+    local id
+    label, id = table.unpack(util_misc.split_string(label, "##"))
+    id = id or label
+
+    if disabled then
+        drag_state[id] = nil
+        input_state[id] = nil
+    end
+
+    local text_size = imgui.calc_text_size("!")
+    local font_size = text_size.y
+    local frame_h = font_size + FRAME_PADDING_Y * 2.0
+    local grab_r = GRAB_MIN_SIZE * 0.5
+    local avail_w = imgui.calc_item_width()
+
+    local cp = imgui.get_cursor_screen_pos()
+    local frame_x0 = cp.x
+    local frame_y0 = cp.y
+    local frame_x1 = cp.x + avail_w
+    local frame_y1 = cp.y + frame_h
+    local rail_x0 = frame_x0 + grab_r + ITEM_PADDING_Y
+    local rail_len = avail_w - (grab_r + ITEM_PADDING_Y) * 2
+
+    ---@param v number
+    ---@return number
+    local function snap(v)
+        if not step then
+            return v
+        end
+        return math.floor(v / step + 0.5) * step
+    end
+
+    local function val_to_x(v)
+        return rail_x0 + (v - v_min) / (v_max - v_min) * rail_len
+    end
+    local function x_to_val(x)
+        local t = math.max(0.0, math.min(1.0, (x - rail_x0) / rail_len))
+        return v_min + t * (v_max - v_min)
+    end
+
+    local is_hovered = false
+    local is_active = false
+
+    if not input_state[id] then
+        imgui.invisible_button(id, Vector2f.new(avail_w, frame_h))
+        is_hovered = imgui.is_item_hovered()
+        is_active = imgui.is_item_active()
+    end
+
+    if
+        not input_state[id]
+        and not disabled
+        and is_hovered
+        and imgui.is_mouse_clicked(0)
+        and (
+            imgui.is_key_down(imgui.ImGuiKey.Key_LeftCtrl)
+            or imgui.is_key_down(imgui.ImGuiKey.Key_RightCtrl)
+        )
+    then
+        input_state[id] = string.format(
+            "%s, %s",
+            string.format(display_format, v_lo),
+            string.format(display_format, v_hi)
+        )
+    end
+
+    if input_state[id] then
+        if imgui.is_key_down(imgui.ImGuiKey.Key_Escape) then
+            input_state[id] = nil
+            imgui.invisible_button(id, Vector2f.new(avail_w, frame_h))
+        else
+            imgui.set_cursor_screen_pos(cp)
+            local confirm, new_text = imgui.input_text(
+                string.format("%s##%s_input", label, id),
+                input_state[id],
+                64 | 4096
+            )
+            input_state[id] = new_text
+
+            if confirm then
+                local n_lo, n_hi = parse_range(input_state[id], v_min, v_max)
+                if n_lo and n_hi then
+                    n_lo, n_hi = snap(n_lo), snap(n_hi)
+                    changed = v_lo ~= n_lo or v_hi ~= n_hi
+                    v_lo, v_hi = n_lo, n_hi
+                end
+                input_state[id] = nil
+            end
+
+            return changed, v_lo, v_hi
+        end
+    end
+
+    local mx = imgui.get_mouse().x
+
+    if not is_active then
+        drag_state[id] = nil
+    end
+
+    if not disabled and is_hovered and imgui.is_mouse_clicked(0) then
+        local dist_lo = math.abs(mx - val_to_x(v_lo))
+        local dist_hi = math.abs(mx - val_to_x(v_hi))
+        if v_lo == v_hi then
+            if v_lo <= v_min then
+                drag_state[id] = "hi"
+            elseif v_hi >= v_max then
+                drag_state[id] = "lo"
+            else
+                drag_state[id] = mx <= val_to_x(v_lo) and "lo" or "hi"
+            end
+        else
+            drag_state[id] = dist_lo <= dist_hi and "lo" or "hi"
+        end
+    end
+
+    if not disabled and drag_state[id] then
+        local new_val = snap(x_to_val(mx))
+        if drag_state[id] == "lo" then
+            local c = math.max(v_min, math.min(new_val, v_hi))
+            if c ~= v_lo then
+                v_lo = c
+                changed = true
+            end
+        else
+            local c = math.min(v_max, math.max(new_val, v_lo))
+            if c ~= v_hi then
+                v_hi = c
+                changed = true
+            end
+        end
+    end
+
+    local lo_x = val_to_x(v_lo)
+    local hi_x = val_to_x(v_hi)
+    local dl = imgui.get_window_draw_list()
+
+    dl:add_rect_filled(
+        Vector2f.new(frame_x0, frame_y0),
+        Vector2f.new(frame_x1, frame_y1),
+        disabled and util_misc.mul_alpha(COL_FRAME_BG, DISABLED_ALPHA)
+            or (
+                is_active and COL_FRAME_BG_ACTIVE
+                or is_hovered and COL_FRAME_BG_HOVERED
+                or COL_FRAME_BG
+            ),
+        0,
+        0
+    )
+
+    dl:add_rect_filled(
+        Vector2f.new(lo_x - grab_r, frame_y0 + ITEM_PADDING_Y),
+        Vector2f.new(lo_x + grab_r, frame_y1 - ITEM_PADDING_Y),
+        disabled and util_misc.mul_alpha(COL_GRAB, DISABLED_ALPHA)
+            or (drag_state[id] == "lo" and COL_GRAB_ACT or COL_GRAB),
+        0,
+        0
+    )
+    dl:add_rect_filled(
+        Vector2f.new(hi_x - grab_r, frame_y0 + ITEM_PADDING_Y),
+        Vector2f.new(hi_x + grab_r, frame_y1 - ITEM_PADDING_Y),
+        disabled and util_misc.mul_alpha(COL_GRAB, DISABLED_ALPHA)
+            or (drag_state[id] == "hi" and COL_GRAB_ACT or COL_GRAB),
+        0,
+        0
+    )
+
+    local overlay = display_text
+        or string.format(
+            "%s  |  %s",
+            string.format(display_format, v_lo),
+            string.format(display_format, v_hi)
+        )
+    local text_size = imgui.calc_text_size(overlay)
+    dl:add_text(
+        Vector2f.new(
+            frame_x0 + (avail_w - text_size.x) * 0.5,
+            frame_y0 + (frame_h - text_size.y) * 0.5
+        ),
+        disabled and util_misc.mul_alpha(COL_TEXT, DISABLED_ALPHA) or COL_TEXT,
+        overlay
+    )
+
+    if label then
+        dl:add_text(
+            Vector2f.new(frame_x1 + font_size * 0.5, frame_y0 + (frame_h - text_size.y) * 0.5),
+            disabled and util_misc.mul_alpha(COL_TEXT, DISABLED_ALPHA) or COL_TEXT,
+            label
+        )
+    end
+
+    return changed, v_lo, v_hi
+end
+
+---@param label string
+---@param v_lo integer
+---@param v_hi integer
+---@param v_min integer
+---@param v_max integer
+---@param display_format string?
+---@param display_text string?
+---@param disabled boolean?
+---@return boolean, integer, integer
+function this.range_slider_int(
+    label,
+    v_lo,
+    v_hi,
+    v_min,
+    v_max,
+    display_format,
+    display_text,
+    disabled
+)
+    return range_slider(
+        label,
+        v_lo,
+        v_hi,
+        v_min,
+        v_max,
+        display_format or "%d",
+        display_text,
+        disabled,
+        1
+    )
+end
+
+---@param label string
+---@param v_lo number
+---@param v_hi number
+---@param v_min number
+---@param v_max number
+---@param display_format string?
+---@param display_text string?
+---@param disabled boolean?
+---@return boolean, number, number
+function this.range_slider_float(
+    label,
+    v_lo,
+    v_hi,
+    v_min,
+    v_max,
+    display_format,
+    display_text,
+    disabled
+)
+    return range_slider(
+        label,
+        v_lo,
+        v_hi,
+        v_min,
+        v_max,
+        display_format or "%.2f",
+        display_text,
+        disabled
+    )
+end
+
+return this
