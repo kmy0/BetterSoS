@@ -73,8 +73,16 @@ local function range_slider(
     local text_size = imgui.calc_text_size("!")
     local font_size = text_size.y
     local frame_h = font_size + FRAME_PADDING_Y * 2.0
-    local grab_r = GRAB_MIN_SIZE * 0.5
     local avail_w = imgui.calc_item_width()
+
+    local base_inset = GRAB_MIN_SIZE * 0.5 + ITEM_PADDING_Y
+    local rail_len_base = avail_w - base_inset * 2
+
+    local grab_r = GRAB_MIN_SIZE * 0.5
+    if step and v_max > v_min then
+        local step_w = (step / (v_max - v_min)) * rail_len_base
+        grab_r = math.max(grab_r, step_w * 0.5)
+    end
 
     local cp = imgui.get_cursor_screen_pos()
     local frame_x0 = cp.x
@@ -233,11 +241,11 @@ local function range_slider(
             string.format(display_format, v_lo),
             string.format(display_format, v_hi)
         )
-    local text_size = imgui.calc_text_size(overlay)
+    local overlay_size = imgui.calc_text_size(overlay)
     dl:add_text(
         Vector2f.new(
-            frame_x0 + (avail_w - text_size.x) * 0.5,
-            frame_y0 + (frame_h - text_size.y) * 0.5
+            frame_x0 + (avail_w - overlay_size.x) * 0.5,
+            frame_y0 + (frame_h - overlay_size.y) * 0.5
         ),
         disabled and util_misc.mul_alpha(COL_TEXT, DISABLED_ALPHA) or COL_TEXT,
         overlay
@@ -245,7 +253,7 @@ local function range_slider(
 
     if label then
         dl:add_text(
-            Vector2f.new(frame_x1 + font_size * 0.5, frame_y0 + (frame_h - text_size.y) * 0.5),
+            Vector2f.new(frame_x1 + font_size * 0.5, frame_y0 + (frame_h - overlay_size.y) * 0.5),
             disabled and util_misc.mul_alpha(COL_TEXT, DISABLED_ALPHA) or COL_TEXT,
             label
         )
