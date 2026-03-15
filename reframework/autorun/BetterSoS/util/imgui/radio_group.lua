@@ -51,6 +51,7 @@ function this.radio_group(id, current, options, disabled_options, disabled, hori
 
         local p = imgui.get_cursor_screen_pos()
         local clicked = imgui.invisible_button(id .. "_" .. i, Vector2f.new(btn_w, RADIO_ROW_H))
+        local after_btn = imgui.get_cursor_screen_pos()
         local is_option_disabled = disabled_options and disabled_options[i]
         local hovered = imgui.is_item_hovered() and not disabled and not is_option_disabled
         local is_active = imgui.is_item_active() and not disabled and not is_option_disabled
@@ -99,7 +100,7 @@ function this.radio_group(id, current, options, disabled_options, disabled, hori
         if horizontal and i < #keys then
             imgui.set_cursor_screen_pos(Vector2f.new(p.x + btn_w + RADIO_SPACING, p.y))
         else
-            imgui.set_cursor_screen_pos(Vector2f.new(p.x, p.y + RADIO_ROW_H + 2))
+            imgui.set_cursor_screen_pos(Vector2f.new(after_btn.x, after_btn.y))
         end
     end
 
