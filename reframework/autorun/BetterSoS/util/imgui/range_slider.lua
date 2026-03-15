@@ -241,15 +241,20 @@ local function range_slider(
             string.format(display_format, v_lo),
             string.format(display_format, v_hi)
         )
+
     local overlay_size = imgui.calc_text_size(overlay)
-    dl:add_text(
-        Vector2f.new(
-            frame_x0 + (avail_w - overlay_size.x) * 0.5,
-            frame_y0 + (frame_h - overlay_size.y) * 0.5
-        ),
-        disabled and util_misc.mul_alpha(COL_TEXT, DISABLED_ALPHA) or COL_TEXT,
-        overlay
-    )
+    while overlay_size.x > avail_w and #overlay > 0 do
+        overlay = overlay:sub(1, -2)
+        overlay_size = imgui.calc_text_size(overlay)
+    end
+
+    if #overlay > 0 then
+        local centered = overlay_size.x < imgui.calc_text_size(display_text or "").x
+        local text_x = centered and frame_x0 or frame_x0 + (avail_w - overlay_size.x) * 0.5
+        local text_y = frame_y0 + (frame_h - overlay_size.y) * 0.5
+        local col = disabled and util_misc.mul_alpha(COL_TEXT, DISABLED_ALPHA) or COL_TEXT
+        dl:add_text(Vector2f.new(text_x, text_y), col, overlay)
+    end
 
     if label then
         dl:add_text(
