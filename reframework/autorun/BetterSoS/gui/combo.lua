@@ -165,6 +165,18 @@ function this:enable_item(key, value)
     return self:get_index(key, value) --[[@as integer]]
 end
 
+function this:enable_all_items()
+    for _, v in pairs(util_table.values(self.disabled)) do
+        self:enable_item(v.key)
+    end
+end
+
+function this:disable_all_items()
+    for _, v in pairs(util_table.values(self.map)) do
+        self:disable_item(v.key)
+    end
+end
+
 ---@param key any?
 ---@param value string?
 ---@return integer?

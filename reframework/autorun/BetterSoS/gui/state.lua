@@ -188,6 +188,14 @@ function this.translate_combo()
     end
 end
 
+function this.clear_disabled_items()
+    for _, c in
+        pairs(this.combo --[[@as table<string, Combo>]])
+    do
+        c:enable_all_items()
+    end
+end
+
 function this.init()
     local config_mod = config.current.mod
 

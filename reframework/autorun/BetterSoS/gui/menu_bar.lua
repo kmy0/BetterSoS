@@ -55,6 +55,7 @@ local function draw_mod_menu()
     imgui.separator()
 
     if util_imgui.menu_item(util_gui.tr("menu.config.reset"), nil, nil, true) then
+        state.clear_disabled_items()
         config:restore()
     end
 
