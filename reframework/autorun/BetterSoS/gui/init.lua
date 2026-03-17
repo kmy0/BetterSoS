@@ -5,6 +5,7 @@
 ---@field flags integer
 ---@field condition integer
 
+local combo_chips = require("BetterSoS.util.imgui.combo_chips")
 local config = require("BetterSoS.config.init")
 local data = require("BetterSoS.data.init")
 local menu_bar = require("BetterSoS.gui.menu_bar")
@@ -36,67 +37,32 @@ local function draw_chips(key)
     set:checkbox("##box_ignore_" .. key, "mod.ignore_" .. key)
     imgui.begin_disabled(not config:get("mod.ignore_" .. key))
     imgui.same_line()
-    imgui.begin_disabled(util_table.empty(combo.values))
-    set:combo("##combo_ignore_" .. key, combo_index_key, combo.values)
-    imgui.same_line()
-
-    if imgui.button(util_gui.tr("mod.button_ignore", key)) then
-        local index = combo:get_key(config:get(combo_index_key))
-        if not map[index] then
-            map[index] = util_table.empty(map) and 1
-                or math.max(table.unpack(util_table.values(map))) + 1
-            config:set(combo_index_key, combo:disable_item(index))
-        end
-    end
+    set:combo_chips(
+        "##combo_ignore_" .. key,
+        combo_index_key,
+        map,
+        combo,
+        util_gui.tr("mod.button_ignore", key),
+        {
+            {
+                label = config.lang:tr("mod.button_clear"),
+                action = combo_chips.clear_selection,
+            },
+            {
+                label = config.lang:tr("mod.button_ignore_all"),
+                is_draw = function(_, _, combo, _)
+                    return not util_table.empty(combo.map)
+                        and #combo.values + #combo.disabled > config.min_ignore_all
+                end,
+                action = combo_chips.select_all,
+            },
+        }
+    )
     imgui.end_disabled()
 
     if not util_table.empty(map) then
-        local sorted = util_table.sort(util_table.keys(map), function(a, b)
-            return map[a] < map[b]
-        end)
-
-        imgui.same_line()
-        local max_x = imgui.get_cursor_pos().x
-        local spacing = 8
-        local frame_padding = 4
-        local some_x = 3
-        imgui.new_line()
-
-        imgui.push_style_color(5, mod_map.colors.blue)
-        imgui.push_style_var(13, 2)
-        imgui.push_style_color(21, mod_map.colors.bg)
-
-        for i = 1, #sorted do
-            local val = sorted[i]
-            local text = combo:get_disabled(val).value
-
-            if
-                imgui.get_cursor_pos().x
-                    + imgui.calc_text_size(text).x
-                    + spacing
-                    + frame_padding
-                    + some_x
-                >= max_x
-            then
-                imgui.new_line()
-            end
-
-            if imgui.button(string.format("%s##%s_%s", text, key, i)) then
-                map[val] = nil
-                config:set(combo_index_key, combo:enable_item(val))
-            end
-
-            imgui.same_line()
-        end
-
-        imgui.new_line()
-        imgui.pop_style_color(2)
-        imgui.pop_style_var(1)
-
         imgui.separator()
     end
-
-    imgui.end_disabled()
 end
 
 ---@param id string

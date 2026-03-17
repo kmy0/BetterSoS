@@ -1,7 +1,7 @@
 ---@class (exact) ComboChipActionButton
 ---@field label string
----@field is_draw (fun(selection: integer, item_selection: table<string, integer>, combo: Combo): boolean)?
----@field action fun(selection: integer, item_selection: table<string, integer>, combo: Combo): boolean, integer
+---@field is_draw (fun(selection: integer, item_selection: table<string, integer>, combo: Combo, changed: boolean): boolean)?
+---@field action fun(selection: integer, item_selection: table<string, integer>, combo: Combo, changed: boolean): boolean, integer
 
 local util_table = require("BetterSoS.util.misc.table")
 
@@ -12,7 +12,7 @@ local ITEM_SPACING_X = 8.0
 local SOME_X = 3.0
 
 local COL_BORDER = 0xff905c34
-local COL_BORDER_ACTION = 0xff40a0d5
+local COL_BORDER_ACTION = 0xff6a8fad
 local COL_BG = 0xff1c1b1a
 
 ---@param max_x number
@@ -54,24 +54,28 @@ end
 ---@param selection integer
 ---@param item_selection table<string, integer>
 ---@param combo Combo
+---@param changed boolean
 ---@return boolean, integer
 ---@diagnostic disable-next-line: unused-local
-function this.clear_selection(selection, item_selection, combo)
+function this.clear_selection(selection, item_selection, combo, changed)
     combo:enable_all_items()
     util_table.clear(item_selection)
-    return true, 1
+    changed = true
+    return changed, 1
 end
 
 ---@param selection integer
 ---@param item_selection table<string, integer>
 ---@param combo Combo
+---@param changed boolean
 ---@return boolean, integer
-function this.select_all(selection, item_selection, combo)
-    this.clear_selection(selection, item_selection, combo)
+function this.select_all(selection, item_selection, combo, changed)
+    this.clear_selection(selection, item_selection, combo, changed)
     while #combo.map > 0 do
         this.select_item(1, item_selection, combo)
     end
-    return true, 1
+    changed = true
+    return changed, 1
 end
 
 ---@param id string
@@ -133,7 +137,7 @@ function this.combo_chips(id, selection, item_selection, combo, button_label, ac
             for i = 1, #action_buttons do
                 local ab = action_buttons[i]
 
-                if ab.is_draw and not ab.is_draw(selection, item_selection, combo) then
+                if ab.is_draw and not ab.is_draw(selection, item_selection, combo, changed) then
                     goto continue
                 end
 
@@ -143,7 +147,7 @@ function this.combo_chips(id, selection, item_selection, combo, button_label, ac
 
                 if imgui.button(string.format("%s##action_button_%s_%s", ab.label, id, i)) then
                     local a_changed = false
-                    a_changed, selection = ab.action(selection, item_selection, combo)
+                    a_changed, selection = ab.action(selection, item_selection, combo, changed)
                     changed = a_changed or changed
                 end
 

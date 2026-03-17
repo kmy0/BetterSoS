@@ -8,6 +8,8 @@
 ---@field version string
 ---@field commit string
 ---@field name string
+---
+---@field min_ignore_all integer
 
 local config_base = require("BetterSoS.util.misc.config_base")
 local lang = require("BetterSoS.config.lang")
@@ -25,6 +27,8 @@ local this = config_base:new(require("BetterSoS.config.defaults.mod"), config_pa
 this.version = version.version
 this.commit = version.commit
 this.name = mod_name
+
+this.min_ignore_all = 5
 
 this.gui = config_base:new(
     require("BetterSoS.config.defaults.gui"),

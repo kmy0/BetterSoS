@@ -48,7 +48,8 @@ return {
         category_require = "Require",
         category_auto = "Auto",
         button_ignore = "Exclude",
-        button_remove = "Remove",
+        button_ignore_all = "Exclude All",
+        button_clear = "Clear",
         box_ignore_passcode = "Passcode",
         box_ignore_manualaccept = "Manual Accept",
         combo_ignore_monster_state = {
