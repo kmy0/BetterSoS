@@ -22,7 +22,7 @@
 ---@field listener BindListener
 ---@field collision string?
 
-local combo = require("BetterSoS.gui.combo")
+local combo = require("BetterSoS.util.imgui.combo")
 local config = require("BetterSoS.config.init")
 local data = require("BetterSoS.data.init")
 local e = require("BetterSoS.util.game.enum")

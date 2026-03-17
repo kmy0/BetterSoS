@@ -186,4 +186,23 @@ function this:radio_group(id, config_key, options, disabled_options, disabled, h
     )
 end
 
+---@param id string
+---@param config_key string
+---@param item_selection table<string, integer>
+---@param combo Combo
+---@param button_label string
+---@param action_buttons ComboChipActionButton[]?
+---@return boolean
+function this:combo_chips(id, config_key, item_selection, combo, button_label, action_buttons)
+    return self:generic_config(
+        id,
+        config_key,
+        util_imgui.combo_chips,
+        item_selection,
+        combo,
+        button_label,
+        action_buttons
+    )
+end
+
 return this

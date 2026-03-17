@@ -1,0 +1,165 @@
+---@class (exact) ComboChipActionButton
+---@field label string
+---@field is_draw (fun(selection: integer, item_selection: table<string, integer>, combo: Combo): boolean)?
+---@field action fun(selection: integer, item_selection: table<string, integer>, combo: Combo): boolean, integer
+
+local util_table = require("BetterSoS.util.misc.table")
+
+local this = {}
+
+local FRAME_PADDING_X = 4.0
+local ITEM_SPACING_X = 8.0
+local SOME_X = 3.0
+
+local COL_BORDER = 0xff905c34
+local COL_BORDER_ACTION = 0xff40a0d5
+local COL_BG = 0xff1c1b1a
+
+---@param max_x number
+---@param text string
+---@return boolean
+local function is_new_line(max_x, text)
+    return imgui.get_cursor_pos().x
+            + imgui.calc_text_size(text).x
+            + ITEM_SPACING_X
+            + FRAME_PADDING_X
+            + SOME_X
+        >= max_x
+end
+
+---@param selection integer
+---@param item_selection table<string, integer>
+---@param combo Combo
+---@return integer
+function this.select_item(selection, item_selection, combo)
+    local key = combo:get_key(selection)
+    if not item_selection[key] then
+        item_selection[key] = util_table.empty(item_selection) and 1
+            or math.max(table.unpack(util_table.values(item_selection))) + 1
+        selection = combo:disable_item(key)
+    end
+
+    return selection
+end
+
+---@param combo_key string
+---@param item_selection table<string, integer>
+---@param combo Combo
+---@return integer
+function this.deselect_item(combo_key, item_selection, combo)
+    item_selection[combo_key] = nil
+    return combo:enable_item(combo_key)
+end
+
+---@param selection integer
+---@param item_selection table<string, integer>
+---@param combo Combo
+---@return boolean, integer
+---@diagnostic disable-next-line: unused-local
+function this.clear_selection(selection, item_selection, combo)
+    combo:enable_all_items()
+    util_table.clear(item_selection)
+    return true, 1
+end
+
+---@param selection integer
+---@param item_selection table<string, integer>
+---@param combo Combo
+---@return boolean, integer
+function this.select_all(selection, item_selection, combo)
+    this.clear_selection(selection, item_selection, combo)
+    while #combo.map > 0 do
+        this.select_item(1, item_selection, combo)
+    end
+    return true, 1
+end
+
+---@param id string
+---@param selection integer
+---@param item_selection table<string, integer>
+---@param combo Combo
+---@param button_label string
+---@param action_buttons ComboChipActionButton[]?
+---@return boolean, integer
+function this.combo_chips(id, selection, item_selection, combo, button_label, action_buttons)
+    local changed = false
+
+    imgui.begin_disabled(util_table.empty(combo.values))
+    changed, selection = imgui.combo("##" .. id, selection, combo.values)
+    imgui.same_line()
+    if imgui.button(button_label) then
+        this.select_item(selection, item_selection, combo)
+        changed = true
+    end
+    imgui.end_disabled()
+
+    if not util_table.empty(item_selection) then
+        local sorted = util_table.sort(util_table.keys(item_selection), function(a, b)
+            return item_selection[a] < item_selection[b]
+        end)
+
+        imgui.same_line()
+        local max_x = imgui.get_cursor_pos().x
+        imgui.new_line()
+
+        imgui.push_style_color(5, COL_BORDER)
+        imgui.push_style_var(13, 2)
+        imgui.push_style_color(21, COL_BG)
+
+        for i = 1, #sorted do
+            local val = sorted[i]
+            local text = combo:get_disabled(val).value
+
+            if is_new_line(max_x, text) then
+                imgui.new_line()
+            end
+
+            if imgui.button(string.format("%s##%s_%s", text, id, i)) then
+                selection = this.deselect_item(val, item_selection, combo)
+                changed = true
+            end
+
+            imgui.same_line()
+        end
+
+        imgui.pop_style_color(2)
+        imgui.pop_style_var(1)
+
+        if action_buttons then
+            imgui.push_style_color(5, COL_BORDER_ACTION)
+            imgui.push_style_var(13, 2)
+            imgui.push_style_color(21, COL_BG)
+
+            for i = 1, #action_buttons do
+                local ab = action_buttons[i]
+
+                if ab.is_draw and not ab.is_draw(selection, item_selection, combo) then
+                    goto continue
+                end
+
+                if is_new_line(max_x, ab.label) then
+                    imgui.new_line()
+                end
+
+                if imgui.button(string.format("%s##action_button_%s_%s", ab.label, id, i)) then
+                    local a_changed = false
+                    a_changed, selection = ab.action(selection, item_selection, combo)
+                    changed = a_changed or changed
+                end
+
+                imgui.same_line()
+
+                ::continue::
+            end
+
+            imgui.pop_style_color(2)
+            imgui.pop_style_var(1)
+        end
+
+        imgui.new_line()
+    end
+
+    return changed, selection
+end
+
+return this
