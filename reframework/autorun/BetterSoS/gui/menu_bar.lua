@@ -72,6 +72,7 @@ local function draw_lang_menu()
             config_lang.file = menu_item
             config.lang:change()
             config:save()
+            state.translate_combo()
         end
     end
 
