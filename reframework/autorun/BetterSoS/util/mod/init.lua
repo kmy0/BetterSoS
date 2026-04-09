@@ -157,7 +157,11 @@ function this.predicate_quest(quest, quest_filter)
     if quest_filter.monster_target then
         local len = quest.targetMonster:get_Length()
         if
-            (quest_filter.monster_target[mod_enum.monster_target.SMALL] and len == 0)
+            (
+                quest_filter.monster_target[mod_enum.monster_target.SMALL]
+                and m.getQuestTarget(quest.questId)
+                    == e.get("app.QuestDef.QUEST_TARGET").EM_ZAKO_KILL
+            )
             or (quest_filter.monster_target[mod_enum.monster_target.SINGLE] and len == 1)
             or (quest_filter.monster_target[mod_enum.monster_target.MULTI] and len > 1)
         then

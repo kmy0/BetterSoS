@@ -293,6 +293,7 @@ function this.init()
             e.new("app.NETWORK_REQUEST_LISTTYPE")
             e.new("app.NetworkRequest.TYPE")
             e.new("app.cGUIQuestOrderParam.QUEST_ORDER_FROM")
+            e.new("app.QuestDef.QUEST_TARGET")
         end)
     then
         return false

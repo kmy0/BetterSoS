@@ -64,6 +64,7 @@ m.isExQuestRequiredForWishlist = m.wrap(
         "app.WishlistUtil.isExQuestRequiredForWishlist(System.Collections.Generic.IEnumerable`1<app.savedata.cItemWork>, app.EnemyDef.ID, app.EnemyDef.ROLE_ID, app.EnemyDef.LEGENDARY_ID, app.QuestDef.RANK, app.QuestDef.EM_REWARD_RANK, System.Boolean)"
     )
 ) --[[@as fun(rewards: System.Array<app.savedata.cItemWork>, em_id: app.EnemyDef.ID, em_role: app.EnemyDef.ROLE_ID, em_legendary: app.EnemyDef.LEGENDARY_ID, quest_rank: app.QuestDef.RANK, reward_rank: app.QuestDef.EM_REWARD_RANK, check_normal_rewards: System.Boolean): System.Boolean]]
+m.getQuestTarget = m.wrap(m.get("app.MissionUtil.getTargetTypeOfQuest(app.MissionIDList.ID)")) --[[@as fun(quest_id: app.MissionIDList.ID): app.QuestDef.QUEST_TARGET]]
 
 m.hook(
     "app.GUI050000.search(app.net_quest_session.cSearchQuestSessionInfo, app.MissionIDList.ID)",
