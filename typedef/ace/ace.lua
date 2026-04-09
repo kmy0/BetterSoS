@@ -28,6 +28,8 @@
 ---@class ace.cGUIMessageInfo : via.clr.ManagedObject
 ---@field get_MsgID fun(self: ace.cGUIMessageInfo): System.Guid
 ---@field setMessageInfo fun(self: ace.cGUIMessageInfo, guid: System.Guid)
+---@field set_MsgID fun(self: ace.cGUIMessageInfo, id: System.Guid)
+---@field get_Params fun(self: ace.cGUIMessageInfo): System.Array<ace.cGUIMessageInfo.ParamData>
 
 ---@class ace.cLimitedArray<T> : {[integer]: T}, System.Object
 ---@field _Array System.Array<T>
@@ -44,3 +46,6 @@
 
 ---@class ace.cMouseKeyboardInfo : via.clr.ManagedObject
 ---@field isOn fun(self: ace.cMouseKeyboardInfo, key: ace.ACE_MKB_KEY.INDEX): System.Boolean
+
+---@class ace.cGUIMessageInfo.ParamData : System.ValueType
+---@field ParamString System.String

@@ -28,6 +28,7 @@
 ---@field max_hr integer
 ---@field max_time integer
 ---@field max_player integer
+---@field guid_placeholder string
 
 ---@alias AreaId integer
 ---@alias CampId integer
@@ -68,6 +69,7 @@ local this = {
         max_hr = 0,
         max_time = 50,
         max_player = 4,
+        guid_placeholder = "d8fde216-5404-4248-9c23-79e53ec6afee",
     },
 }
 return this

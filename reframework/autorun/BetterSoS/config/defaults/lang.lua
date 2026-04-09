@@ -11,6 +11,7 @@ return {
         text_frame = "Frame",
         text_frame_plural = "Frames",
         text_diamond = "◆",
+        text_quest_id = "[Quest ID: %s]",
     },
     menu = {
         config = {
@@ -111,5 +112,6 @@ return {
             search_start = "Start Search",
             search_cancel = "Cancel Search",
         },
+        input_quest_id = "Quest ID",
     },
 }

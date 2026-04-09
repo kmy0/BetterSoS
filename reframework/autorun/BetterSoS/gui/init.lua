@@ -196,6 +196,14 @@ local function draw_item()
     local config_mod = config.current.mod
 
     util_imgui.separator_text(config.lang:tr("mod.category_require"), nil, nil, mod_map.colors.blue)
+
+    set:checkbox("##box_require_quest_id", "mod.require_quest_id")
+    imgui.begin_disabled(not config_mod.require_quest_id)
+    imgui.same_line()
+    imgui.set_next_item_width(imgui.calc_text_size("0").x * 10)
+    set:input_text(util_gui.tr("mod.input_quest_id"), "mod.quest_id", 1 << 0)
+    imgui.end_disabled()
+
     set:checkbox(
         util_gui.tr("mod.box_require_item_wishlist", "any"),
         "mod.require_item_wishlist_any"

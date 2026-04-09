@@ -122,6 +122,9 @@ function this.make_quest_filter()
         item_judge = config_mod.require_item_judge and tonumber(
             state.combo.item:get_key(config_mod.combo_item_judge)
         ) or nil,
+        quest_id = config_mod.require_quest_id and config_mod.quest_id ~= "" and tonumber(
+            config_mod.quest_id
+        ) or nil,
         type = quest_type,
         multiplay_setting = config_mod.ignore_multiplay_setting
                 and util_table.map_table(config_mod.multiplay_setting, function(o)
@@ -243,6 +246,10 @@ function this.predicate_quest(quest, quest_filter)
         if match then
             return false
         end
+    end
+
+    if quest_filter.quest_id and quest.questId ~= quest_filter.quest_id then
+        return false
     end
 
     local quest_type = s.get("app.MissionManager"):getMissionTypeFromID(quest.questId)

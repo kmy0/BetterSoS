@@ -98,6 +98,11 @@ m.hook(
     util.ref.capture_this,
     hook.enable_index_post
 )
+m.hook(
+    "app.QuestUtil.getQuestClientNameText(app.user_data.QuestData)",
+    hook.get_quest_client_pre,
+    hook.get_quest_client_post
+)
 
 re.on_draw_ui(function()
     if imgui.button(string.format("%s %s", config.name, config.commit)) and init.ok then

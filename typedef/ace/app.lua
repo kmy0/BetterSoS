@@ -264,3 +264,6 @@
 ---@field ChoiseNameTextList System.Array<System.String>
 ---@field ChoiceValueList System.Array<System.Int32>
 ---@field ActualEnableIndexList System.Array<System.Int32>
+
+---@class app.user_data.QuestData : via.UserData
+---@field getMissionId fun(self: app.user_data.QuestData): app.MissionIDList.ID

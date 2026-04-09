@@ -138,4 +138,46 @@ function this.enable_index_post(_)
     end
 end
 
+function this.get_quest_client_pre(args)
+    if not config.current.mod.enabled then
+        return
+    end
+
+    local quest_data = sdk.to_managed_object(args[2]) --[[@as app.user_data.QuestData]]
+    util_ref.thread_store(quest_data:getMissionId())
+end
+
+function this.get_quest_client_post(retval)
+    if not config.current.mod.enabled then
+        return
+    end
+
+    local ret = sdk.to_managed_object(retval) --[[@as ace.cGUIMessageInfo]]
+    local params = ret:get_Params()
+
+    if params:get_Count() == 0 then
+        local msg_id = ret:get_MsgID()
+        local txt = util_game.lang.get_message_local2(msg_id)
+        ret:set_MsgID(util_game.parse_guid(ace_map.guid_placeholder))
+        ret:call(
+            "addParam(System.String)",
+            string.format(
+                "%s %s",
+                txt,
+                string.format(config.lang:tr("misc.text_quest_id"), util_ref.thread_get())
+            )
+        )
+    else
+        local index = params:get_Count() - 1
+        local param = params:get_Item(index)
+
+        param.ParamString = string.format(
+            "%s %s",
+            param.ParamString,
+            string.format(config.lang:tr("misc.text_quest_id"), util_ref.thread_get())
+        )
+        params:set_Item(index, param)
+    end
+end
+
 return this

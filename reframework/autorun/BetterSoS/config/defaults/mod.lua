@@ -32,6 +32,7 @@
 ---@field require_item_rare boolean
 ---@field require_item_wishlist_any boolean
 ---@field require_boost boolean
+---@field require_quest_id boolean
 ---@field auto_start_quest integer -- QuestStartType
 ---@field auto_search integer -- QuestSearchType
 ---@field slider_time integer
@@ -65,6 +66,7 @@
 ---@field monster_grade table<string, integer>
 ---@field multiplay_setting table<string, integer>
 ---@field quest_target table<string, integer>
+---@field quest_id string
 ---@field bind {
 ---     action: BindBase[],
 ---     buffer: integer,
@@ -104,7 +106,9 @@ return {
         require_item_wishlist_any = false,
         require_item_judge = false,
         require_item_rare = false,
+        require_quest_id = false,
         require_boost = false,
+        quest_id = "",
         auto_start_quest = 1,
         auto_search = 1,
         slider_time = 1,
