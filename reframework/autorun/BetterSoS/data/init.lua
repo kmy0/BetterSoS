@@ -266,6 +266,19 @@ local function make_player()
     return player, player_max
 end
 
+---@return app.QuestDef.QUEST_TARGET[]
+local function make_quest_target()
+    local e_tar = e.get("app.QuestDef.QUEST_TARGET")
+    local ret = {
+        e_tar.EM_BOSS_HUNTING,
+        e_tar.EM_BOSS_KILL,
+        e_tar.EM_BOSS_CAPTURE,
+        e_tar.EM_BOSS_REMAIN_HP,
+        e_tar.ITEM,
+    }
+    return util_table.sort(ret)
+end
+
 ---@return boolean
 function this.init()
     if not s.get("app.VariousDataManager") then
@@ -312,6 +325,7 @@ function this.init()
     ace_map.max_hr =
         util_ref.types.get("app.BasicParamUtil"):get_field("MAX_HUNTER_RANK"):get_data()--[[@as integer]]
     ace_map.player, ace_map.player_max = make_player()
+    ace_map.quest_target = make_quest_target()
 
     return true
 end

@@ -31,6 +31,7 @@
 ---@field monster_grade table<integer, boolean>?
 ---@field type table<app.MissionTypeList.TYPE, boolean>?
 ---@field environ table<app.EnvironmentType.ENVIRONMENT, boolean>?
+---@field quest_target table<app.QuestDef.QUEST_TARGET, boolean>?
 ---@field boost boolean
 ---@field item_wishlist boolean
 ---@field item_wishlist_any boolean

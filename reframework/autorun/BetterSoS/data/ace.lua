@@ -16,6 +16,7 @@
 ---@field player integer[]
 ---@field player_max integer[]
 ---@field monster_to_species table<app.EnemyDef.ID, app.EnemyDef.SPECIES>
+---@field quest_target app.QuestDef.QUEST_TARGET[]
 ---@field monster_species app.EnemyDef.SPECIES[]
 ---@field environ app.EnvironmentType.ENVIRONMENT[]
 ---@field multiplay_setting app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING[]
@@ -63,6 +64,7 @@ local this = {
         grades = {},
         player = {},
         player_max = {},
+        quest_target = {},
         max_hr = 0,
         max_time = 50,
         max_player = 4,

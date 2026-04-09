@@ -13,6 +13,34 @@ local mod_enum = data.mod.enum
 
 local this = {}
 
+---@param quest app.net_session_manager.SessionManager.cSearchResultQuest
+---@return app.QuestDef.QUEST_TARGET
+local function get_quest_target(quest)
+    local ret = m.getQuestTarget(quest.questId)
+    if ret == e.get("app.QuestDef.QUEST_TARGET").EM_ZAKO_KILL then
+        ret = e.get("app.QuestDef.QUEST_TARGET").EM_BOSS_KILL
+    end
+
+    -- investigations
+    if ret == -1 then
+        ret = e.get("app.QuestDef.QUEST_TARGET").EM_BOSS_HUNTING
+        local all_kill = true
+
+        util_game.do_something_limited(quest.targetMonster, function(_, _, value)
+            if m.isEnableCaptureBoss(value.Id) then
+                all_kill = false
+                return false
+            end
+        end)
+
+        if all_kill then
+            ret = e.get("app.QuestDef.QUEST_TARGET").EM_BOSS_KILL
+        end
+    end
+
+    return ret
+end
+
 ---@return QuestFilter
 function this.make_quest_filter()
     local config_mod = config.current.mod
@@ -46,6 +74,11 @@ function this.make_quest_filter()
         rank = config_mod.ignore_rank and util_table.map_table(config_mod.rank, function(o)
             return tonumber(o)
         end) or nil,
+        quest_target = config_mod.ignore_quest_target
+                and util_table.map_table(config_mod.quest_target, function(o)
+                    return tonumber(o)
+                end)
+            or nil,
         host_hr = config_mod.ignore_host_hr
                 and { config_mod.slider_host_hr_lower, config_mod.slider_host_hr_upper }
             or nil,
@@ -147,6 +180,10 @@ function this.predicate_quest(quest, quest_filter)
         end
     end
 
+    if quest_filter.quest_target and quest_filter.quest_target[get_quest_target(quest)] then
+        return false
+    end
+
     if
         (quest_filter.map and quest_filter.map[quest.fieldId])
         or (quest_filter.environ and quest_filter.environ[quest.envType])
@@ -159,8 +196,7 @@ function this.predicate_quest(quest, quest_filter)
         if
             (
                 quest_filter.monster_target[mod_enum.monster_target.SMALL]
-                and m.getQuestTarget(quest.questId)
-                    == e.get("app.QuestDef.QUEST_TARGET").EM_ZAKO_KILL
+                and get_quest_target(quest) == e.get("app.QuestDef.QUEST_TARGET").EM_ZAKO_KILL
             )
             or (quest_filter.monster_target[mod_enum.monster_target.SINGLE] and len == 1)
             or (quest_filter.monster_target[mod_enum.monster_target.MULTI] and len > 1)

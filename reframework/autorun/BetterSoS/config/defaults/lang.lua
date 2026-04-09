@@ -83,6 +83,13 @@ return {
             PLAYER_ONLY = "Only Players",
             NPC_ONLY = "Only Support Hunters",
         },
+        combo_ignore_quest_target = {
+            EM_BOSS_HUNTING = "Hunt",
+            EM_BOSS_KILL = "Kill",
+            EM_BOSS_CAPTURE = "Capture",
+            ITEM = "Gathering",
+            EM_BOSS_REMAIN_HP = "Repel",
+        },
         box_require_item_wishlist = "Wishlisted Item",
         box_require_item_rare = "Rare Item",
         box_require_boost = "Gathering Boost",

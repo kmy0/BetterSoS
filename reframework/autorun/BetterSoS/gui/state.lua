@@ -17,6 +17,7 @@
 ---@field monster_grade Combo
 ---@field player Combo
 ---@field player_max Combo
+---@field quest_target Combo
 
 ---@class (exact) NewBindListener
 ---@field opt string
@@ -213,6 +214,18 @@ local this = {
                 )
             end
         ),
+        quest_target = combo:new(
+            nil,
+            function(a, b)
+                return a.value < b.value
+            end,
+            nil,
+            function(key)
+                local val = tonumber(key) --[[@as app.QuestDef.QUEST_TARGET]]
+                local name = e.get("app.QuestDef.QUEST_TARGET")[val]
+                return config.lang:tr("mod.combo_ignore_quest_target." .. name)
+            end
+        ),
     },
 }
 
@@ -287,6 +300,11 @@ function this.init()
         util_table.map_array(ace_map.player_max),
         nil,
         util_table.keys(config_mod.player_max)
+    )
+    this.combo.quest_target:swap(
+        util_table.map_array(ace_map.quest_target),
+        nil,
+        util_table.keys(config_mod.quest_target)
     )
 
     this.translate_combo()
