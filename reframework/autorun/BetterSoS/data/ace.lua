@@ -13,6 +13,8 @@
 ---@field monsters app.EnemyDef.ID[]
 ---@field ranks integer[]
 ---@field grades integer[]
+---@field player integer[]
+---@field player_max integer[]
 ---@field monster_to_species table<app.EnemyDef.ID, app.EnemyDef.SPECIES>
 ---@field monster_species app.EnemyDef.SPECIES[]
 ---@field environ app.EnvironmentType.ENVIRONMENT[]
@@ -59,6 +61,8 @@ local this = {
         multiplay_setting = {},
         ranks = {},
         grades = {},
+        player = {},
+        player_max = {},
         max_hr = 0,
         max_time = 50,
         max_player = 4,

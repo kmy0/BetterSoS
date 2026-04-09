@@ -49,7 +49,11 @@ function this:load()
         current_version = loaded_config.version
         self.current = util_table.merge_t(self.default, loaded_config)
 
-        --FIXME: probably should deal with this at some point...
+        --[[FIXME:
+            when the user removes all binds, the default binds are restored, because
+            converting empty tables to json nulls them, and then merge_t merges the
+            default binds back in since the table no longer exists
+        ]]
         self.current.mod.bind.action = loaded_config.mod.bind.action or {}
     else
         current_version = self.commit

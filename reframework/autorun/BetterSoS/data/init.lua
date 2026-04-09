@@ -250,6 +250,22 @@ local function make_search_type_to_quest_type()
     return util_table.keys(ret), ret
 end
 
+---@return integer[], integer[]
+local function make_player()
+    local player = {}
+    local player_max = {}
+
+    for i = 2, ace_map.max_player do
+        table.insert(player_max, i)
+    end
+
+    for i = 1, ace_map.max_player - 1 do
+        table.insert(player, i)
+    end
+
+    return player, player_max
+end
+
 ---@return boolean
 function this.init()
     if not s.get("app.VariousDataManager") then
@@ -294,6 +310,7 @@ function this.init()
     ace_map.multiplay_setting = make_multiplay_setting()
     ace_map.max_hr =
         util_ref.types.get("app.BasicParamUtil"):get_field("MAX_HUNTER_RANK"):get_data()--[[@as integer]]
+    ace_map.player, ace_map.player_max = make_player()
 
     return true
 end

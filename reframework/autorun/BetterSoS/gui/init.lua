@@ -27,7 +27,7 @@ local this = {
     },
 }
 
----@param key "map" | "monster" | "type" | "monster_species" | "monster_state" | "monster_target" | "environ" | "multiplay_setting" | "rank" | "monster_grade"
+---@param key "map" | "monster" | "type" | "monster_species" | "monster_state" | "monster_target" | "environ" | "multiplay_setting" | "rank" | "monster_grade" | "player" | "player_max"
 local function draw_chips(key)
     local config_mod = config.current.mod
     local combo = state.combo[key] --[[@as Combo]]
@@ -140,30 +140,6 @@ local function draw_quest_attr()
                 or config.lang:tr("misc.text_minute_plural")
         )
     )
-    draw_ignore_slider(
-        "player",
-        2,
-        ace_map.max_player - 1,
-        string.format(
-            config.lang:tr("mod.slider_text_player"),
-            config_mod.slider_player,
-            config.lang:tr("misc.text_player"),
-            config_mod.slider_player == 1 and config.lang:tr("misc.text_slot")
-                or config.lang:tr("misc.text_slot_plural")
-        )
-    )
-    draw_ignore_slider(
-        "player_max",
-        2,
-        ace_map.max_player,
-        string.format(
-            config.lang:tr("mod.slider_text_player_max"),
-            config_mod.slider_player_max,
-            config.lang:tr("misc.text_player"),
-            config_mod.slider_player_max == 1 and config.lang:tr("misc.text_slot")
-                or config.lang:tr("misc.text_slot_plural")
-        )
-    )
     draw_ignore_slider_range(
         "host_hr",
         "lower",
@@ -176,6 +152,8 @@ local function draw_quest_attr()
             config_mod.slider_host_hr_upper
         )
     )
+    draw_chips("player")
+    draw_chips("player_max")
     draw_chips("rank")
     draw_chips("type")
     draw_chips("multiplay_setting")

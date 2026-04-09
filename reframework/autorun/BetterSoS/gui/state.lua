@@ -15,6 +15,8 @@
 ---@field multiplay_setting Combo
 ---@field rank Combo
 ---@field monster_grade Combo
+---@field player Combo
+---@field player_max Combo
 
 ---@class (exact) NewBindListener
 ---@field opt string
@@ -177,6 +179,40 @@ local this = {
                 return key .. config.lang:tr("misc.text_diamond")
             end
         ),
+        player = combo:new(
+            nil,
+            function(a, b)
+                return tonumber(a.key) < tonumber(b.key)
+            end,
+            nil,
+            function(key)
+                local val = tonumber(key)
+                return string.format(
+                    config.lang:tr("mod.combo_ignore_player_text"),
+                    val,
+                    config.lang:tr("misc.text_player"),
+                    val == 1 and config.lang:tr("misc.text_slot")
+                        or config.lang:tr("misc.text_slot_plural")
+                )
+            end
+        ),
+        player_max = combo:new(
+            nil,
+            function(a, b)
+                return tonumber(a.key) < tonumber(b.key)
+            end,
+            nil,
+            function(key)
+                local val = tonumber(key)
+                return string.format(
+                    config.lang:tr("mod.combo_ignore_player_max_text"),
+                    val,
+                    config.lang:tr("misc.text_player"),
+                    val == 1 and config.lang:tr("misc.text_slot")
+                        or config.lang:tr("misc.text_slot_plural")
+                )
+            end
+        ),
     },
 }
 
@@ -241,6 +277,16 @@ function this.init()
         util_table.map_array(ace_map.grades),
         nil,
         util_table.keys(config_mod.monster_grade)
+    )
+    this.combo.player:swap(
+        util_table.map_array(ace_map.player),
+        nil,
+        util_table.keys(config_mod.player)
+    )
+    this.combo.player_max:swap(
+        util_table.map_array(ace_map.player_max),
+        nil,
+        util_table.keys(config_mod.player_max)
     )
 
     this.translate_combo()

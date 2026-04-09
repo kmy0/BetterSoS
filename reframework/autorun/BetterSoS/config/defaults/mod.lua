@@ -35,8 +35,6 @@
 ---@field auto_search integer -- QuestSearchType
 ---@field slider_time integer
 ---@field slider_time_limit integer
----@field slider_player integer
----@field slider_player_max integer
 ---@field slider_host_hr_lower integer
 ---@field slider_host_hr_upper integer
 ---@field combo_ignore_rank integer
@@ -50,6 +48,8 @@
 ---@field combo_ignore_monster_state integer
 ---@field combo_ignore_environ integer
 ---@field combo_ignore_multiplay_setting integer
+---@field combo_ignore_player integer
+---@field combo_ignore_player_max integer
 ---@field monster table<string, integer>
 ---@field monster_species table<string, integer>
 ---@field monster_target table<string, integer>
@@ -58,6 +58,8 @@
 ---@field type table<string, integer>
 ---@field environ table<string, integer>
 ---@field rank table<string, integer>
+---@field player table<string, integer>
+---@field player_max table<string, integer>
 ---@field monster_grade table<string, integer>
 ---@field multiplay_setting table<string, integer>
 ---@field bind {
@@ -103,8 +105,6 @@ return {
         auto_search = 1,
         slider_time = 1,
         slider_time_limit = 1,
-        slider_player = 3,
-        slider_player_max = 3,
         slider_host_hr_lower = 1,
         slider_host_hr_upper = 999,
         combo_ignore_monster = 1,
@@ -118,6 +118,8 @@ return {
         combo_ignore_multiplay_setting = 1,
         combo_ignore_monster_grade = 1,
         combo_ignore_rank = 1,
+        combo_ignore_player = 1,
+        combo_ignore_player_max = 1,
         monster = {},
         map = {},
         type = {},
@@ -128,6 +130,8 @@ return {
         multiplay_setting = {},
         rank = {},
         monster_grade = {},
+        player = {},
+        player_max = {},
         bind = {
             action = {
                 {

@@ -35,8 +35,14 @@ function this.make_quest_filter()
         manualaccept = config_mod.ignore_manualaccept,
         time = config_mod.ignore_time and config_mod.slider_time or nil,
         time_limit = config_mod.ignore_time_limit and config_mod.slider_time_limit or nil,
-        player = config_mod.ignore_player and config_mod.slider_player or nil,
-        player_max = config_mod.ignore_player_max and config_mod.slider_player_max or nil,
+        player = config_mod.ignore_player and util_table.map_table(config_mod.player, function(o)
+            return tonumber(o)
+        end) or nil,
+        player_max = config_mod.ignore_player_max
+                and util_table.map_table(config_mod.player_max, function(o)
+                    return tonumber(o)
+                end)
+            or nil,
         rank = config_mod.ignore_rank and util_table.map_table(config_mod.rank, function(o)
             return tonumber(o)
         end) or nil,
@@ -122,8 +128,8 @@ function this.predicate_quest(quest, quest_filter)
     end
 
     if
-        (quest_filter.player and quest.maxMemberNum - quest.memberNum < quest_filter.player)
-        or (quest_filter.player_max and quest.maxMemberNum < quest_filter.player_max)
+        (quest_filter.player and quest_filter.player[quest.maxMemberNum - quest.memberNum])
+        or (quest_filter.player_max and quest_filter.player_max[quest.maxMemberNum])
     then
         return false
     end

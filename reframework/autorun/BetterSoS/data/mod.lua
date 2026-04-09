@@ -18,8 +18,8 @@
 ---@field manualaccept boolean
 ---@field time integer?
 ---@field time_limit integer?
----@field player integer?
----@field player_max integer?
+---@field player table<integer, boolean>?
+---@field player_max table<integer, boolean>?
 ---@field rank table<integer, boolean>?
 ---@field host_hr [integer, integer]?
 ---@field multiplay_setting table<app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING, boolean>?
