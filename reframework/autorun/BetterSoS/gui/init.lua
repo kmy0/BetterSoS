@@ -89,7 +89,7 @@ local function draw_ignore_slider_range(id, id_a, id_b, min_val, max_val, displa
     local config_mod = config.current.mod
 
     set:checkbox("##box_ignore_" .. id, "mod.ignore_" .. id)
-    local disabled = not config_mod["ignore_" .. id]
+    local disabled = not config_mod["ignore_" .. id] or not config_mod.enabled
     imgui.begin_disabled(disabled)
     imgui.same_line()
 
