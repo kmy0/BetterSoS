@@ -139,11 +139,35 @@ local function to_0_0_8_rank(config)
     end
 end
 
+---@param config table<string, any>
+local function to_0_1_1_player(config)
+    if config.mod.ignore_player then
+        local j = 1
+        for i = 1, config.mod.slider_player - 1 do
+            ---@diagnostic disable-next-line: no-unknown
+            config.mod.player[tostring(i)] = j
+            j = j + 1
+        end
+    end
+
+    if config.mod.ignore_player_max then
+        local j = 1
+        for i = 2, config.mod.slider_player_max - 1 do
+            ---@diagnostic disable-next-line: no-unknown
+            config.mod.player_max[tostring(i)] = j
+            j = j + 1
+        end
+    end
+end
+
 this.migrations = {
     ["0.0.8"] = function(config)
         to_0_0_8_auto(config)
         to_0_0_8_host_hr(config)
         to_0_0_8_rank(config)
+    end,
+    ["0.1.1"] = function(config)
+        to_0_1_1_player(config)
     end,
 }
 
