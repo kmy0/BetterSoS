@@ -27,14 +27,19 @@ local this = {
     },
 }
 
----@param key "map" | "monster" | "type" | "monster_species" | "monster_state" | "monster_target" | "environ" | "multiplay_setting" | "rank" | "monster_grade" | "player" | "player_max" | "quest_target"
-local function draw_chips(key)
+---@param key "map" | "monster" | "type" | "monster_species" | "monster_state" | "monster_target" | "environ" | "multiplay_setting" | "rank" | "monster_grade" | "player" | "player_max" | "quest_target" | "weapon_host" | "weapon_member" | "weapon_more"
+---@param tooltip string?
+local function draw_chips(key, tooltip)
     local config_mod = config.current.mod
     local combo = state.combo[key] --[[@as Combo]]
     local map = config_mod[key] --[[@as table<string, integer>]]
     local combo_index_key = "mod.combo_ignore_" .. key --[[@as string]]
 
     set:checkbox("##box_ignore_" .. key, "mod.ignore_" .. key)
+    if tooltip then
+        util_imgui.tooltip(tooltip)
+    end
+
     imgui.begin_disabled(not config:get("mod.ignore_" .. key))
     imgui.same_line()
     set:combo_chips(
@@ -269,6 +274,15 @@ local function draw_auto()
     util_imgui.tooltip(config.lang:tr("mod.tooltip_auto_search"), true)
 end
 
+local function draw_weapon()
+    util_imgui.separator_text(config.lang:tr("mod.category_weapon"), nil, nil, mod_map.colors.blue)
+    set:checkbox(util_gui.tr("mod.box_ignore_weapon_sub"), "mod.ignore_weapon_sub")
+    util_imgui.tooltip(config.lang:tr("mod.tooltip_weapon_sub"), true)
+    draw_chips("weapon_host", config.lang:tr("mod.tooltip_weapon_host"))
+    draw_chips("weapon_member", config.lang:tr("mod.tooltip_weapon_member"))
+    draw_chips("weapon_more", config.lang:tr("mod.tooltip_weapon_more"))
+end
+
 function this.draw()
     local gui_main = config.gui.current.gui.main
     local config_mod = config.current.mod
@@ -312,6 +326,7 @@ function this.draw()
     imgui.begin_disabled(not config_mod.enabled)
     draw_auto()
     draw_quest_attr()
+    draw_weapon()
     draw_monster()
     draw_map()
     draw_item()

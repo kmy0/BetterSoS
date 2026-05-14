@@ -113,6 +113,7 @@
 ---@field questTimeLimit System.Int32
 ---@field questRank app.QuestDef.RANK
 ---@field multiplaySetting app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING
+---@field hunterInfo ace.cLimitedArray<app.net_session_manager.SessionManager.cSearchResultQuest.HunterInfo>
 
 ---@class app.user_data.ItemData.cData : ace.user_data.ExcelUserData.cData
 ---@field get_RawName fun(self: app.user_data.ItemData.cData): System.Guid
@@ -258,6 +259,9 @@
 
 ---@class app.net_session_manager.SessionManager.cSearchResultQuest.HunterInfo : System.ValueType
 ---@field hr System.Int32
+---@field weaponType System.Int32
+---@field reserveWeaponType System.Int32
+---@field ishost System.Boolean
 
 ---@class app.cGUI050000MemberSettingItemData.cQuestDifficultyData : app.cGUI050000MemberSettingItemData.cData
 ---@field ChoiceDifficultyList System.Array<app.QuestDef.QUEST_DIFFICULTY_RESCUE_SEARCH_PARAM>

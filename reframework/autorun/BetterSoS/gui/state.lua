@@ -18,6 +18,9 @@
 ---@field player Combo
 ---@field player_max Combo
 ---@field quest_target Combo
+---@field weapon_host Combo
+---@field weapon_member Combo
+---@field weapon_more Combo
 
 ---@class (exact) NewBindListener
 ---@field opt string
@@ -37,6 +40,20 @@ local util_table = require("BetterSoS.util.misc.table")
 
 local ace_map = data.ace.map
 local mod = data.mod
+
+---@param weapon_type string, app.WeaponDef.TYPE
+---@return string
+local function translate_weapon(weapon_type)
+    local w_type = tonumber(weapon_type) --[[@as number]]
+    local custom_type = util_table.reverse_lookup(mod.enum.weapon_type, w_type)
+
+    if custom_type then
+        return config.lang:tr("mod.combo_weapon." .. custom_type)
+    end
+
+    local guid = m.getWeaponName(w_type)
+    return game_lang.get_message_local2(guid)
+end
 
 ---@class GuiState
 local this = {
@@ -226,6 +243,15 @@ local this = {
                 return config.lang:tr("mod.combo_ignore_quest_target." .. name)
             end
         ),
+        weapon_host = combo:new(nil, function(a, b)
+            return a.value < b.value
+        end, nil, translate_weapon),
+        weapon_member = combo:new(nil, function(a, b)
+            return a.value < b.value
+        end, nil, translate_weapon),
+        weapon_more = combo:new(nil, function(a, b)
+            return a.value < b.value
+        end, nil, translate_weapon),
     },
 }
 
@@ -305,6 +331,21 @@ function this.init()
         util_table.map_array(ace_map.quest_target),
         nil,
         util_table.keys(config_mod.quest_target)
+    )
+    this.combo.weapon_host:swap(
+        util_table.map_array(ace_map.weapon_type),
+        nil,
+        util_table.keys(config_mod.weapon_host)
+    )
+    this.combo.weapon_member:swap(
+        util_table.map_array(ace_map.weapon_type),
+        nil,
+        util_table.keys(config_mod.weapon_member)
+    )
+    this.combo.weapon_more:swap(
+        util_table.map_array(ace_map.weapon_type),
+        nil,
+        util_table.keys(config_mod.weapon_more)
     )
 
     this.translate_combo()

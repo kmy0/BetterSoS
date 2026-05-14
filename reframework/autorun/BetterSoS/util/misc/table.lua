@@ -743,4 +743,20 @@ function this.pick_random_key(t)
     return keys[math.random(#keys)]
 end
 
+---@generic K
+---@param ... table<K, number>
+---@return table<K, number>
+function this.sum_values(...)
+    local ts = { ... }
+    local ret = {}
+
+    for _, t in pairs(ts) do
+        for k, v in pairs(t) do
+            ret[k] = ret[k] and ret[k] + v or v
+        end
+    end
+
+    return ret
+end
+
 return this

@@ -15,6 +15,7 @@
 ---@field grades integer[]
 ---@field player integer[]
 ---@field player_max integer[]
+---@field weapon_type app.WeaponDef.TYPE[]
 ---@field monster_to_species table<app.EnemyDef.ID, app.EnemyDef.SPECIES>
 ---@field quest_target app.QuestDef.QUEST_TARGET[]
 ---@field monster_species app.EnemyDef.SPECIES[]
@@ -48,6 +49,7 @@ local this = {
         quest_type = {},
         quest_type_map = {},
         monster_to_species = {},
+        weapon_type = {},
         search_type_to_guid = {
             MISSION = "e284bb17-5832-4884-9e97-b27935d895cd",
             FREE = "2092b44c-6ca1-4739-8c15-de9ff059bf1f",

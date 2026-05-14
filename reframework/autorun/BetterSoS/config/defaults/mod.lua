@@ -27,6 +27,10 @@
 ---@field ignore_multiplay_setting boolean
 ---@field ignore_host_hr boolean
 ---@field ignore_quest_target boolean
+---@field ignore_weapon_host boolean
+---@field ignore_weapon_member boolean
+---@field ignore_weapon_more boolean
+---@field ignore_weapon_sub boolean
 ---@field require_item_wishlist boolean
 ---@field require_item_judge boolean
 ---@field require_item_rare boolean
@@ -53,6 +57,9 @@
 ---@field combo_ignore_player integer
 ---@field combo_ignore_player_max integer
 ---@field combo_ignore_quest_target integer
+---@field combo_ignore_weapon_host integer
+---@field combo_ignore_weapon_member integer
+---@field combo_ignore_weapon_more integer
 ---@field monster table<string, integer>
 ---@field monster_species table<string, integer>
 ---@field monster_target table<string, integer>
@@ -67,6 +74,9 @@
 ---@field multiplay_setting table<string, integer>
 ---@field quest_target table<string, integer>
 ---@field quest_id string
+---@field weapon_host table<string, integer>
+---@field weapon_member table<string, integer>
+---@field weapon_more table<string, integer>
 ---@field bind {
 ---     action: BindBase[],
 ---     buffer: integer,
@@ -102,6 +112,10 @@ return {
         ignore_multiplay_setting = false,
         ignore_host_hr = false,
         ignore_quest_target = false,
+        ignore_weapon_host = false,
+        ignore_weapon_more = false,
+        ignore_weapon_member = false,
+        ignore_weapon_sub = false,
         require_item_wishlist = false,
         require_item_wishlist_any = false,
         require_item_judge = false,
@@ -129,6 +143,9 @@ return {
         combo_ignore_player = 1,
         combo_ignore_player_max = 1,
         combo_ignore_quest_target = 1,
+        combo_ignore_weapon_host = 1,
+        combo_ignore_weapon_member = 1,
+        combo_ignore_weapon_more = 1,
         monster = {},
         map = {},
         type = {},
@@ -142,6 +159,9 @@ return {
         player = {},
         player_max = {},
         quest_target = {},
+        weapon_host = {},
+        weapon_member = {},
+        weapon_more = {},
         bind = {
             action = {
                 {

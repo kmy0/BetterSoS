@@ -131,6 +131,22 @@ function this.make_quest_filter()
                     return tonumber(o)
                 end)
             or nil,
+        weapon_host = config_mod.ignore_weapon_host
+                and util_table.map_table(config_mod.weapon_host, function(o)
+                    return tonumber(o)
+                end)
+            or nil,
+        weapon_member = config_mod.ignore_weapon_member
+                and util_table.map_table(config_mod.weapon_member, function(o)
+                    return tonumber(o)
+                end)
+            or nil,
+        weapon_more = config_mod.ignore_weapon_more
+                and util_table.map_table(config_mod.weapon_more, function(o)
+                    return tonumber(o)
+                end)
+            or nil,
+        weapon_sub = config_mod.ignore_weapon_sub,
     }
 end
 
@@ -203,6 +219,62 @@ function this.predicate_quest(quest, quest_filter)
             )
             or (quest_filter.monster_target[mod_enum.monster_target.SINGLE] and len == 1)
             or (quest_filter.monster_target[mod_enum.monster_target.MULTI] and len > 1)
+        then
+            return false
+        end
+    end
+
+    if quest_filter.weapon_host or quest_filter.weapon_member or quest_filter.weapon_more then
+        ---@type table<app.WeaponDef.TYPE, integer>
+        local weapon_host = {}
+        ---@type table<app.WeaponDef.TYPE, integer>
+        local weapon_member = {}
+
+        util_game.do_something_limited(quest.hunterInfo, function(_, _, value)
+            local weapon_type = m.isGunnerWeapon(value.weaponType) and mod_enum.weapon_type.RANGED
+                or mod_enum.weapon_type.MELEE
+            ---@type table<app.WeaponDef.TYPE, integer>
+            local w = {
+                [weapon_type] = 1,
+                [value.weaponType] = 1,
+            }
+
+            if quest_filter.weapon_sub and value.reserveWeaponType ~= value.weaponType then
+                local weapon_type_sub = m.isGunnerWeapon(value.reserveWeaponType)
+                        and mod_enum.weapon_type.RANGED
+                    or mod_enum.weapon_type.MELEE
+                w = util_table.sum_values(w, {
+                    [weapon_type_sub] = weapon_type_sub ~= weapon_type and 1 or 0 --[[@as integer]],
+                    [value.reserveWeaponType] = 1,
+                })
+            end
+
+            if value.ishost then
+                weapon_host = util_table.sum_values(weapon_host, w)
+            end
+
+            weapon_member = util_table.sum_values(weapon_member, w)
+        end)
+
+        if
+            (
+                quest_filter.weapon_more
+                and util_table.any(quest_filter.weapon_more, function(key, _)
+                    return weapon_member[key] and weapon_member[key] >= 2
+                end)
+            )
+            or (quest_filter.weapon_host and util_table.any(
+                quest_filter.weapon_host,
+                function(key, _)
+                    return weapon_host[key] ~= nil
+                end
+            ))
+            or (
+                quest_filter.weapon_member
+                and util_table.any(quest_filter.weapon_member, function(key, _)
+                    return weapon_member[key] ~= nil
+                end)
+            )
         then
             return false
         end

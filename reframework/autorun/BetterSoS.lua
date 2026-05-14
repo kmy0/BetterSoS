@@ -66,6 +66,9 @@ m.isExQuestRequiredForWishlist = m.wrap(
 ) --[[@as fun(rewards: System.Array<app.savedata.cItemWork>, em_id: app.EnemyDef.ID, em_role: app.EnemyDef.ROLE_ID, em_legendary: app.EnemyDef.LEGENDARY_ID, quest_rank: app.QuestDef.RANK, reward_rank: app.QuestDef.EM_REWARD_RANK, check_normal_rewards: System.Boolean): System.Boolean]]
 m.getQuestTarget = m.wrap(m.get("app.MissionUtil.getTargetTypeOfQuest(app.MissionIDList.ID)")) --[[@as fun(quest_id: app.MissionIDList.ID): app.QuestDef.QUEST_TARGET]]
 m.isEnableCaptureBoss = m.wrap(m.get("app.EnemyUtil.isEnableCaptureBoss(app.EnemyDef.ID)")) --[[@as fun(em_id: app.EnemyDef.ID): System.Boolean]]
+m.getWeaponName = m.wrap(m.get("app.WeaponUtil.getWeaponTypeName(app.WeaponDef.TYPE)")) --[[@as fun(weapon_type: app.WeaponDef.TYPE): System.Guid]]
+m.isGunnerWeapon =
+    util.misc.cache.memoize(m.wrap(m.get("app.WeaponUtil.isGunnerWeapon(app.WeaponDef.TYPE)"))) --[[@as fun(weapon_type: app.WeaponDef.TYPE): System.Boolean]]
 
 m.hook(
     "app.GUI050000.search(app.net_quest_session.cSearchQuestSessionInfo, app.MissionIDList.ID)",

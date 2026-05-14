@@ -279,6 +279,17 @@ local function make_quest_target()
     return util_table.sort(ret)
 end
 
+---@return app.WeaponDef.TYPE[]
+local function make_weapon()
+    ---@type app.WeaponDef.TYPE[]
+    local ret = util_table.values(this.mod.enum.weapon_type)
+    for _, w in e.iter("app.WeaponDef.TYPE") do
+        table.insert(ret, w)
+    end
+
+    return util_table.sort(ret)
+end
+
 ---@return boolean
 function this.init()
     if not s.get("app.VariousDataManager") then
@@ -326,6 +337,7 @@ function this.init()
         util_ref.types.get("app.BasicParamUtil"):get_field("MAX_HUNTER_RANK"):get_data()--[[@as integer]]
     ace_map.player, ace_map.player_max = make_player()
     ace_map.quest_target = make_quest_target()
+    ace_map.weapon_type = make_weapon()
 
     return true
 end

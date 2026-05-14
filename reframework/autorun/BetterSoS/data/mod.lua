@@ -12,6 +12,7 @@
 ---@field monster_state MonsterState.*
 ---@field monster_target MonsterTarget.*
 ---@field auto_search_quest QuestSearchType.*
+---@field weapon_type WeaponType.*
 
 ---@class (exact) QuestFilter
 ---@field passcode boolean
@@ -38,6 +39,10 @@
 ---@field item_wishlist_any boolean
 ---@field item_rare boolean
 ---@field item_judge app.ItemDef.ID?
+---@field weapon_host table<app.WeaponDef.TYPE, boolean>?
+---@field weapon_member table<app.WeaponDef.TYPE, boolean>?
+---@field weapon_more table<app.WeaponDef.TYPE, boolean>?
+---@field weapon_sub boolean
 
 ---@class ModData
 local this = {
@@ -83,6 +88,11 @@ this.enum.monster_target = { ---@class MonsterTarget.* : {[string]: integer}
     SMALL = 1,
     SINGLE = 2,
     MULTI = 3,
+}
+---@enum WeaponType
+this.enum.weapon_type = { ---@class WeaponType.* : {[string]: integer}
+    MELEE = -100,
+    RANGED = -99,
 }
 
 ---@return boolean
