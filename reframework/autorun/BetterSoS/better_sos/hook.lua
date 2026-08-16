@@ -158,7 +158,9 @@ function this.get_quest_client_post(retval)
     if params:get_Count() == 0 then
         local msg_id = ret:get_MsgID()
         local txt = util_game.lang.get_message_local2(msg_id)
-        ret:set_MsgID(util_game.parse_guid(ace_map.guid_placeholder))
+        local guid = util_game.parse_guid(ace_map.guid_placeholder)
+
+        ret:set_MsgID(guid)
         ret:call(
             "addParam(System.String)",
             string.format(
@@ -168,15 +170,19 @@ function this.get_quest_client_post(retval)
             )
         )
     else
-        local index = params:get_Count() - 1
-        local param = params:get_Item(index)
+        ---@type string[]
+        local strings = {}
+        util_game.do_something(params, function(_, _, value)
+            table.insert(strings, value.ParamString)
+        end)
 
-        param.ParamString = string.format(
-            "%s %s",
-            param.ParamString,
+        table.insert(
+            strings,
             string.format(config.lang:tr("misc.text_quest_id"), util_ref.thread_get())
         )
-        params:set_Item(index, param)
+
+        params:Clear()
+        ret:call("addParam(System.String)", table.concat(strings, " "))
     end
 end
 
