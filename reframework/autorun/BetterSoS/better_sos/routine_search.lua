@@ -221,7 +221,7 @@ function RoutineSearchQuest:_pick_or_start()
         end
 
         local gui_quest_view = util_ref.ctor("app.cGUIQuestViewData", true)
-        gui_quest_view:add_ref()
+        gui_quest_view:add_ref_permanent()
         gui_quest_view:call(
             ".ctor(app.net_session_manager.SessionManager.cSearchResultQuest)",
             quest
@@ -235,7 +235,7 @@ function RoutineSearchQuest:_pick_or_start()
         local password = ""
         local join_sess_info = util_ref.ctor("app.net_quest_session.cJoinQuestSessionInfo", true)
 
-        join_sess_info:add_ref()
+        join_sess_info:add_ref_permanent()
         join_sess_info:call(
             ".ctor(System.String, System.Boolean, System.Int32, System.Guid, System.String)",
             session_id,
@@ -328,6 +328,7 @@ function RoutineSearchQuest:_start_quest()
         return
     end
 
+    quest_data:add_ref_permanent()
     self._quest:set_ActiveQuestData(quest_data)
 
     local start_point = util_mod.get_closest_starting_point(
@@ -335,11 +336,12 @@ function RoutineSearchQuest:_start_quest()
         self._quest:get_TargetEmStartArea(),
         quest_search.campList
     )
+    start_point:add_ref_permanent()
 
     local host_id = self._quest.Session:getHostHunterID()
     local quest_arg = util_ref.ctor("app.cQuestAcceptArg", true)
     local accepted_time = 0
-    quest_arg:add_ref()
+    quest_arg:add_ref_permanent()
     quest_arg:call(
         ".ctor(app.cStartPointInfo, System.Guid, System.Int64)",
         start_point,
@@ -350,7 +352,7 @@ function RoutineSearchQuest:_start_quest()
     quest_arg.IsJoinRescue = true
 
     local quest_order_param = util_ref.ctor("app.cGUIQuestOrderParam", true)
-    quest_order_param:add_ref()
+    quest_order_param:add_ref_permanent()
     quest_order_param.QuestType = util_mod.get_gui50000_quest_type(self._quest:get_MissionID())
     quest_order_param.ActiveQuestData = quest_data
     quest_order_param.QuestViewData = self._quest

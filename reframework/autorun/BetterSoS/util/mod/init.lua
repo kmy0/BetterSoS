@@ -433,7 +433,7 @@ end
 function this.get_search_info()
     local GUI050000 = this.get_gui_cls("app.GUI050000")
     local ret = util_ref.ctor("app.net_quest_session.cSearchQuestSessionInfo")
-    ret:add_ref()
+    ret:add_ref_permanent()
 
     ---@type app.GUI050000PartsBase.cRescueSearchSettingParamHolder | app.savedata.cQuestRecruteSearchSetting
     local params
@@ -489,6 +489,7 @@ function this.get_search_result(quest_filter, ignored_sessions)
         local session_id = value.questSessionId
         if ignored_sessions[session_id] then
             value.questId = -1
+            return
         end
 
         if
