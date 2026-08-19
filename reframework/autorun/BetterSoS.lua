@@ -3,20 +3,15 @@ local config = require("BetterSoS.config.init")
 local config_menu = require("BetterSoS.gui.init")
 local data = require("BetterSoS.data.init")
 local hook = require("BetterSoS.better_sos.hook")
+local init_chain = require("BetterSoS.config.init_chain")
 local routine_search = require("BetterSoS.better_sos.routine_search")
 local util = require("BetterSoS.util.init")
 local logger = util.misc.logger.g
 ---@class MethodUtil
 local m = require("BetterSoS.util.ref.methods")
 
-local init = util.misc.init_chain:new(
-    "MAIN",
-    config.init,
-    data.init,
-    config_menu.init,
-    bind.init,
-    data.mod.init
-)
+local init =
+    init_chain:new("MAIN", config.init, data.init, config_menu.init, bind.init, data.mod.init)
 local mod = data.mod
 
 m.getRescueTargetInfo = m.wrap(
@@ -126,6 +121,10 @@ re.on_draw_ui(function()
     else
         imgui.same_line()
         imgui.text_colored("Init failed!", mod.map.colors.bad)
+        local errors = logger:get_last_error()
+        if errors then
+            util.imgui.tooltip_exclamation(errors)
+        end
     end
 end)
 
