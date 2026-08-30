@@ -38,7 +38,7 @@
 ---@field Parse fun(self: System.Guid, guid_string: string): System.Guid
 
 ---@class System.Nullable<T> : System.ValueType
----@field _Value any
+---@field _Value T
 ---@field _HasValue System.Boolean
 
 ---@class System.ArrayEnumerator<T> : via.clr.ManagedObject
@@ -46,18 +46,18 @@
 ---@field get_Current fun(self: System.ArrayEnumerator): any
 
 ---@class System.Array<T> : {[integer]: T},System.Object
----@field get_Count fun(self: System.Array<any>): integer
----@field get_Item fun(self: System.Array<any>, i: integer): any
----@field set_Item fun(self: System.Array<any>, i: integer, item: any)
----@field Contains fun(self: System.Array<any>, item: any): System.Boolean
----@field ToArray fun(self: System.Array<any>): System.Array<any>
----@field GetEnumerator fun(self: System.Array<any>): System.ArrayEnumerator<any>
----@field IndexOf fun(self: System.Array<any>, item: any): System.Int32
----@field AddRange fun(self: System.Array<any>, list: System.Array<any>)
----@field AddWithResize fun(self: System.Array<any>, item: any)
----@field Remove fun(self: System.Array<any>, item: any): System.Boolean
----@field Clear fun(self: System.Array<any>)
----@field Insert fun(self: System.Array<any>, i: integer, item: any)
+---@field get_Count fun(self: System.Array<T>): integer
+---@field get_Item fun(self: System.Array<T>, i: integer): T
+---@field set_Item fun(self: System.Array<T>, i: integer, item: T)
+---@field Contains fun(self: System.Array<T>, item: T): System.Boolean
+---@field ToArray fun(self: System.Array<T>): System.Array<T>
+---@field GetEnumerator fun(self: System.Array<T>): System.ArrayEnumerator<T>
+---@field IndexOf fun(self: System.Array<T>, item: T): System.Int32
+---@field AddRange fun(self: System.Array<T>, list: System.Array<T>)
+---@field AddWithResize fun(self: System.Array<T>, item: T)
+---@field Remove fun(self: System.Array<T>, item: T): System.Boolean
+---@field Clear fun(self: System.Array<T>)
+---@field Insert fun(self: System.Array<T>, i: integer, item: T)
 
 ---@class System.Collections.BitArray : via.clr.ManagedObject
 ---@field get_Item fun(self: System.Collections.BitArray, index: System.Int32): System.Boolean

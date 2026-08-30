@@ -49,3 +49,6 @@
 
 ---@class ace.cGUIMessageInfo.ParamData : System.ValueType
 ---@field ParamString System.String
+
+---@class ace.BIT_FLAG : System.ValueType
+---@field _Value System.UInt32

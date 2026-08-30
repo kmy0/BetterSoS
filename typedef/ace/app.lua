@@ -272,3 +272,6 @@
 
 ---@class app.user_data.QuestData : via.UserData
 ---@field getMissionId fun(self: app.user_data.QuestData): app.MissionIDList.ID
+
+---@class app.GameInputManager : ace.GAElement
+---@field setPlayerButtonMask fun(self: app.GameInputManager, mask: app.PlayerDef.ButtonMask.USER)

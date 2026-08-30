@@ -59,6 +59,8 @@ function this.update(_)
     if routine_search.has_instance() then
         routine_search.update()
         m.enablePlNoHit()
+        s.get("app.GameInputManager")
+            :setPlayerButtonMask(e.get("app.PlayerDef.ButtonMask.USER").ALL)
     elseif
         not search_trigger
         and util_mod.is_auto_search()

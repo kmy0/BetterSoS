@@ -39,3 +39,4 @@
 ---@class app.QuestDef.QUEST_DIFFICULTY_RESCUE_SEARCH_PARAM : System.Enum
 ---@class app.QuestDef.QUEST_TARGET : System.Enum
 ---@class app.WeaponDef.TYPE : System.Enum
+---@class app.PlayerDef.ButtonMask.USER : System.Enum
