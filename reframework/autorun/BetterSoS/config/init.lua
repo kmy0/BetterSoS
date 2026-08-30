@@ -61,6 +61,7 @@ function this:load()
         self:save_no_timer()
     end
 
+    current_version = current_version or "0.0.0"
     if migration.need_migrate(current_version, self.commit) then
         migration.migrate(current_version, self.commit, self.current)
         self:save_no_timer()
