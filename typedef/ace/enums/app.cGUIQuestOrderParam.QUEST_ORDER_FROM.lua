@@ -1,0 +1,12 @@
+---@meta
+
+---@class (exact) Enum.app.cGUIQuestOrderParam.QUEST_ORDER_FROM : Enum<app.cGUIQuestOrderParam.QUEST_ORDER_FROM>
+---@field QUEST_COUNTER app.cGUIQuestOrderParam.QUEST_ORDER_FROM
+---@field INVITE_LINQ_PARTY app.cGUIQuestOrderParam.QUEST_ORDER_FROM
+---@field MAP_INSTANCE_QUEST app.cGUIQuestOrderParam.QUEST_ORDER_FROM
+---@field ["QUEST_COUNTER"] app.cGUIQuestOrderParam.QUEST_ORDER_FROM
+---@field ["INVITE_LINQ_PARTY"] app.cGUIQuestOrderParam.QUEST_ORDER_FROM
+---@field ["MAP_INSTANCE_QUEST"] app.cGUIQuestOrderParam.QUEST_ORDER_FROM
+---@field [0] "QUEST_COUNTER"
+---@field [1] "INVITE_LINQ_PARTY"
+---@field [2] "MAP_INSTANCE_QUEST"

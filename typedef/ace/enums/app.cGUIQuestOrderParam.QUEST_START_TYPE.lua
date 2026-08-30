@@ -1,0 +1,18 @@
+---@meta
+
+---@class (exact) Enum.app.cGUIQuestOrderParam.QUEST_START_TYPE : Enum<app.cGUIQuestOrderParam.QUEST_START_TYPE>
+---@field QUEST_COUNTER app.cGUIQuestOrderParam.QUEST_START_TYPE
+---@field DIRECT_ATTACK app.cGUIQuestOrderParam.QUEST_START_TYPE
+---@field MAP app.cGUIQuestOrderParam.QUEST_START_TYPE
+---@field INVITE app.cGUIQuestOrderParam.QUEST_START_TYPE
+---@field OTHER app.cGUIQuestOrderParam.QUEST_START_TYPE
+---@field ["QUEST_COUNTER"] app.cGUIQuestOrderParam.QUEST_START_TYPE
+---@field ["DIRECT_ATTACK"] app.cGUIQuestOrderParam.QUEST_START_TYPE
+---@field ["MAP"] app.cGUIQuestOrderParam.QUEST_START_TYPE
+---@field ["INVITE"] app.cGUIQuestOrderParam.QUEST_START_TYPE
+---@field ["OTHER"] app.cGUIQuestOrderParam.QUEST_START_TYPE
+---@field [0] "QUEST_COUNTER"
+---@field [1] "DIRECT_ATTACK"
+---@field [2] "MAP"
+---@field [3] "INVITE"
+---@field [4] "OTHER"

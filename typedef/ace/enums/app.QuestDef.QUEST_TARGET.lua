@@ -1,0 +1,27 @@
+---@meta
+
+---@class (exact) Enum.app.QuestDef.QUEST_TARGET : Enum<app.QuestDef.QUEST_TARGET>
+---@field EM_BOSS_HUNTING app.QuestDef.QUEST_TARGET
+---@field EM_BOSS_KILL app.QuestDef.QUEST_TARGET
+---@field EM_BOSS_CAPTURE app.QuestDef.QUEST_TARGET
+---@field EM_BOSS_BREAK_BUI app.QuestDef.QUEST_TARGET
+---@field EM_BOSS_REMAIN_HP app.QuestDef.QUEST_TARGET
+---@field EM_ZAKO_KILL app.QuestDef.QUEST_TARGET
+---@field ITEM app.QuestDef.QUEST_TARGET
+---@field ANIMAL app.QuestDef.QUEST_TARGET
+---@field ["EM_BOSS_HUNTING"] app.QuestDef.QUEST_TARGET
+---@field ["EM_BOSS_KILL"] app.QuestDef.QUEST_TARGET
+---@field ["EM_BOSS_CAPTURE"] app.QuestDef.QUEST_TARGET
+---@field ["EM_BOSS_BREAK_BUI"] app.QuestDef.QUEST_TARGET
+---@field ["EM_BOSS_REMAIN_HP"] app.QuestDef.QUEST_TARGET
+---@field ["EM_ZAKO_KILL"] app.QuestDef.QUEST_TARGET
+---@field ["ITEM"] app.QuestDef.QUEST_TARGET
+---@field ["ANIMAL"] app.QuestDef.QUEST_TARGET
+---@field [0] "EM_BOSS_HUNTING"
+---@field [1] "EM_BOSS_KILL"
+---@field [2] "EM_BOSS_CAPTURE"
+---@field [3] "EM_BOSS_BREAK_BUI"
+---@field [4] "EM_BOSS_REMAIN_HP"
+---@field [5] "EM_ZAKO_KILL"
+---@field [6] "ITEM"
+---@field [7] "ANIMAL"

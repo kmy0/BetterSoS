@@ -318,6 +318,11 @@ function this.init()
             e.new("app.NetworkRequest.TYPE")
             e.new("app.cGUIQuestOrderParam.QUEST_ORDER_FROM")
             e.new("app.QuestDef.QUEST_TARGET")
+            e.new("app.PlayerDef.ButtonMask.USER")
+            e.new("app.EnemyDef.ROLE_ID")
+            e.new("ace.GUIDef.INPUT_DEVICE")
+            e.new("app.EnvironmentType.ENVIRONMENT")
+            e.new("app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING")
         end)
     then
         return false

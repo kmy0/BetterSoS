@@ -1,0 +1,18 @@
+---@meta
+
+---@class (exact) Enum.app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE : Enum<app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE>
+---@field NONE app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE
+---@field MISSION app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE
+---@field FREE app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE
+---@field KEEP app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE
+---@field EVENT app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE
+---@field ["NONE"] app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE
+---@field ["MISSION"] app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE
+---@field ["FREE"] app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE
+---@field ["KEEP"] app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE
+---@field ["EVENT"] app.net_quest_session.cSearchQuestSessionInfo.SEARCH_QUEST_TYPE
+---@field [0] "NONE"
+---@field [1] "MISSION"
+---@field [2] "FREE"
+---@field [3] "KEEP"
+---@field [4] "EVENT"

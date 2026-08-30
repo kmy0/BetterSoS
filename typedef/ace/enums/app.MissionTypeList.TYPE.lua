@@ -1,0 +1,36 @@
+---@meta
+
+---@class (exact) Enum.app.MissionTypeList.TYPE : Enum<app.MissionTypeList.TYPE>
+---@field MAINSTORY app.MissionTypeList.TYPE
+---@field SIDESTORY app.MissionTypeList.TYPE
+---@field FREEQUEST app.MissionTypeList.TYPE
+---@field TUTORIAL app.MissionTypeList.TYPE
+---@field KEEPQUEST app.MissionTypeList.TYPE
+---@field INSTANTQUEST app.MissionTypeList.TYPE
+---@field STREAM_EVENTQUEST app.MissionTypeList.TYPE
+---@field STREAM_CHALLENGEQUEST app.MissionTypeList.TYPE
+---@field TOURNAMENTQUEST app.MissionTypeList.TYPE
+---@field TA_FREEQUEST app.MissionTypeList.TYPE
+---@field TRIALQUEST app.MissionTypeList.TYPE
+---@field ["MAINSTORY"] app.MissionTypeList.TYPE
+---@field ["SIDESTORY"] app.MissionTypeList.TYPE
+---@field ["FREEQUEST"] app.MissionTypeList.TYPE
+---@field ["TUTORIAL"] app.MissionTypeList.TYPE
+---@field ["KEEPQUEST"] app.MissionTypeList.TYPE
+---@field ["INSTANTQUEST"] app.MissionTypeList.TYPE
+---@field ["STREAM_EVENTQUEST"] app.MissionTypeList.TYPE
+---@field ["STREAM_CHALLENGEQUEST"] app.MissionTypeList.TYPE
+---@field ["TOURNAMENTQUEST"] app.MissionTypeList.TYPE
+---@field ["TA_FREEQUEST"] app.MissionTypeList.TYPE
+---@field ["TRIALQUEST"] app.MissionTypeList.TYPE
+---@field [0] "MAINSTORY"
+---@field [1] "SIDESTORY"
+---@field [2] "FREEQUEST"
+---@field [3] "TUTORIAL"
+---@field [4] "KEEPQUEST"
+---@field [5] "INSTANTQUEST"
+---@field [6] "STREAM_EVENTQUEST"
+---@field [7] "STREAM_CHALLENGEQUEST"
+---@field [8] "TOURNAMENTQUEST"
+---@field [9] "TA_FREEQUEST"
+---@field [10] "TRIALQUEST"

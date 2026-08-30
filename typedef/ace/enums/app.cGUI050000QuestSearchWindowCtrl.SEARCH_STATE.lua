@@ -1,0 +1,15 @@
+---@meta
+
+---@class (exact) Enum.app.cGUI050000QuestSearchWindowCtrl.SEARCH_STATE : Enum<app.cGUI050000QuestSearchWindowCtrl.SEARCH_STATE>
+---@field NONE app.cGUI050000QuestSearchWindowCtrl.SEARCH_STATE
+---@field WAIT_SEARCH_QUEST_SESSION app.cGUI050000QuestSearchWindowCtrl.SEARCH_STATE
+---@field SUCCESS_SEARCH_QUEST_SESSION app.cGUI050000QuestSearchWindowCtrl.SEARCH_STATE
+---@field FAILDE_SEARCH_QUEST_SESSION app.cGUI050000QuestSearchWindowCtrl.SEARCH_STATE
+---@field ["NONE"] app.cGUI050000QuestSearchWindowCtrl.SEARCH_STATE
+---@field ["WAIT_SEARCH_QUEST_SESSION"] app.cGUI050000QuestSearchWindowCtrl.SEARCH_STATE
+---@field ["SUCCESS_SEARCH_QUEST_SESSION"] app.cGUI050000QuestSearchWindowCtrl.SEARCH_STATE
+---@field ["FAILDE_SEARCH_QUEST_SESSION"] app.cGUI050000QuestSearchWindowCtrl.SEARCH_STATE
+---@field [-1] "NONE"
+---@field [0] "WAIT_SEARCH_QUEST_SESSION"
+---@field [1] "SUCCESS_SEARCH_QUEST_SESSION"
+---@field [2] "FAILDE_SEARCH_QUEST_SESSION"

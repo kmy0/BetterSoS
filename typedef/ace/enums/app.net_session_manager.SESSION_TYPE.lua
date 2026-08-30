@@ -1,0 +1,21 @@
+---@meta
+
+---@class (exact) Enum.app.net_session_manager.SESSION_TYPE : Enum<app.net_session_manager.SESSION_TYPE>
+---@field NONE app.net_session_manager.SESSION_TYPE
+---@field LOBBY app.net_session_manager.SESSION_TYPE
+---@field QUEST app.net_session_manager.SESSION_TYPE
+---@field LINK app.net_session_manager.SESSION_TYPE
+---@field MEMORIES app.net_session_manager.SESSION_TYPE
+---@field LOCAL app.net_session_manager.SESSION_TYPE
+---@field ["NONE"] app.net_session_manager.SESSION_TYPE
+---@field ["LOBBY"] app.net_session_manager.SESSION_TYPE
+---@field ["QUEST"] app.net_session_manager.SESSION_TYPE
+---@field ["LINK"] app.net_session_manager.SESSION_TYPE
+---@field ["MEMORIES"] app.net_session_manager.SESSION_TYPE
+---@field ["LOCAL"] app.net_session_manager.SESSION_TYPE
+---@field [0] "NONE"
+---@field [1] "LOBBY"
+---@field [2] "QUEST"
+---@field [3] "LINK"
+---@field [4] "MEMORIES"
+---@field [5] "LOCAL"

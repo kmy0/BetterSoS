@@ -1,0 +1,18 @@
+---@meta
+
+---@class (exact) Enum.app.cStartPointInfo.START_POINT_TYPE : Enum<app.cStartPointInfo.START_POINT_TYPE>
+---@field NONE app.cStartPointInfo.START_POINT_TYPE
+---@field BASE_CAMP app.cStartPointInfo.START_POINT_TYPE
+---@field TENT app.cStartPointInfo.START_POINT_TYPE
+---@field TEMPORARY_CAMP app.cStartPointInfo.START_POINT_TYPE
+---@field ST405_AREA1 app.cStartPointInfo.START_POINT_TYPE
+---@field ["NONE"] app.cStartPointInfo.START_POINT_TYPE
+---@field ["BASE_CAMP"] app.cStartPointInfo.START_POINT_TYPE
+---@field ["TENT"] app.cStartPointInfo.START_POINT_TYPE
+---@field ["TEMPORARY_CAMP"] app.cStartPointInfo.START_POINT_TYPE
+---@field ["ST405_AREA1"] app.cStartPointInfo.START_POINT_TYPE
+---@field [-1] "NONE"
+---@field [0] "BASE_CAMP"
+---@field [1] "TENT"
+---@field [2] "TEMPORARY_CAMP"
+---@field [3] "ST405_AREA1"

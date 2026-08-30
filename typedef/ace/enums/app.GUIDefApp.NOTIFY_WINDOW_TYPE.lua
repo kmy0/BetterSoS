@@ -1,0 +1,21 @@
+---@meta
+
+---@class (exact) Enum.app.GUIDefApp.NOTIFY_WINDOW_TYPE : Enum<app.GUIDefApp.NOTIFY_WINDOW_TYPE>
+---@field THREE_CHOICE app.GUIDefApp.NOTIFY_WINDOW_TYPE
+---@field YES_OR_NO app.GUIDefApp.NOTIFY_WINDOW_TYPE
+---@field CONFIRM app.GUIDefApp.NOTIFY_WINDOW_TYPE
+---@field TEXT_ONLY app.GUIDefApp.NOTIFY_WINDOW_TYPE
+---@field LONG_SENTENCE app.GUIDefApp.NOTIFY_WINDOW_TYPE
+---@field LONG_SENTENCE_YES_OR_NO app.GUIDefApp.NOTIFY_WINDOW_TYPE
+---@field ["THREE_CHOICE"] app.GUIDefApp.NOTIFY_WINDOW_TYPE
+---@field ["YES_OR_NO"] app.GUIDefApp.NOTIFY_WINDOW_TYPE
+---@field ["CONFIRM"] app.GUIDefApp.NOTIFY_WINDOW_TYPE
+---@field ["TEXT_ONLY"] app.GUIDefApp.NOTIFY_WINDOW_TYPE
+---@field ["LONG_SENTENCE"] app.GUIDefApp.NOTIFY_WINDOW_TYPE
+---@field ["LONG_SENTENCE_YES_OR_NO"] app.GUIDefApp.NOTIFY_WINDOW_TYPE
+---@field [0] "THREE_CHOICE"
+---@field [1] "YES_OR_NO"
+---@field [2] "CONFIRM"
+---@field [3] "TEXT_ONLY"
+---@field [4] "LONG_SENTENCE"
+---@field [5] "LONG_SENTENCE_YES_OR_NO"

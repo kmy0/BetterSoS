@@ -1,0 +1,12 @@
+---@meta
+
+---@class (exact) Enum.app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING : Enum<app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING>
+---@field PLAYER_WITH_NPC app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING
+---@field PLAYER_ONLY app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING
+---@field NPC_ONLY app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING
+---@field ["PLAYER_WITH_NPC"] app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING
+---@field ["PLAYER_ONLY"] app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING
+---@field ["NPC_ONLY"] app.net_quest_session.cCreateQuestSessionInfo.MULTIPLAY_SETTING
+---@field [0] "PLAYER_WITH_NPC"
+---@field [1] "PLAYER_ONLY"
+---@field [2] "NPC_ONLY"
