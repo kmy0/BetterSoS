@@ -101,6 +101,13 @@ return {
             MELEE = "Melee",
             RANGED = "Ranged",
         },
+        combo_item_judge = {
+            ANCIENT_ORB = "Ancient Orb",
+            GLOWING_ORB = "Glowing Orb",
+            MYSTERY_ORB = "Mystery Orb",
+            MATERIAL = "Material",
+            WEAPON_PART = "Weapon Part",
+        },
         box_require_item_wishlist = "Wishlisted Item",
         box_require_item_rare = "Rare Item",
         box_require_boost = "Gathering Boost",
@@ -127,5 +134,6 @@ return {
             search_cancel = "Cancel Search",
         },
         input_quest_id = "Quest ID",
+        tooltip_slider_item_judge = "Atleast",
     },
 }

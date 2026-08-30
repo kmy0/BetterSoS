@@ -13,6 +13,7 @@
 ---@field monster_target MonsterTarget.*
 ---@field auto_search_quest QuestSearchType.*
 ---@field weapon_type WeaponType.*
+---@field judge_group JudgeGroup.*
 
 ---@class (exact) QuestFilter
 ---@field passcode boolean
@@ -38,7 +39,7 @@
 ---@field item_wishlist boolean
 ---@field item_wishlist_any boolean
 ---@field item_rare boolean
----@field item_judge app.ItemDef.ID?
+---@field item_judge {id: app.ItemDef.ID[], num: integer}?
 ---@field weapon_host table<app.WeaponDef.TYPE, boolean>?
 ---@field weapon_member table<app.WeaponDef.TYPE, boolean>?
 ---@field weapon_more table<app.WeaponDef.TYPE, boolean>?
@@ -93,6 +94,14 @@ this.enum.monster_target = { ---@class MonsterTarget.* : {[string]: integer}
 this.enum.weapon_type = { ---@class WeaponType.* : {[string]: integer}
     MELEE = -100,
     RANGED = -99,
+}
+---@enum JudgeGroup
+this.enum.judge_group = { ---@class JudgeGroup.* : {[string]: integer}
+    ANCIENT_ORB = -1,
+    GLOWING_ORB = -2,
+    MYSTERY_ORB = -3,
+    MATERIAL = -4,
+    WEAPON_PART = -5,
 }
 
 ---@return boolean

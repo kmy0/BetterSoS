@@ -145,6 +145,7 @@
 
 ---@class app.savedata.cItemWork : ace.cSaveDataParam
 ---@field get_ItemId fun(self: app.savedata.cItemWork): app.ItemDef.ID
+---@field Num System.Int16
 
 ---@class app.GUIManager : ace.GUIManagerBase
 ---@field getNotifyWindowModule fun(self: app.GUIManager): app.cGUISystemModuleNotifyWindowApp

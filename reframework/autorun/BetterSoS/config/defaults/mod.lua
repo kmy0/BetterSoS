@@ -44,6 +44,7 @@
 ---@field slider_time_limit integer
 ---@field slider_host_hr_lower integer
 ---@field slider_host_hr_upper integer
+---@field slider_item_judge integer
 ---@field combo_ignore_rank integer
 ---@field combo_ignore_monster_grade integer
 ---@field combo_ignore_monster integer
@@ -131,6 +132,7 @@ return {
         slider_time_limit = 1,
         slider_host_hr_lower = 1,
         slider_host_hr_upper = 999,
+        slider_item_judge = 1,
         combo_ignore_monster = 1,
         combo_ignore_map = 1,
         combo_item_judge = 1,

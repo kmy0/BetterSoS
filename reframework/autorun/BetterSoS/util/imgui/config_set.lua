@@ -205,4 +205,22 @@ function this:combo_chips(id, config_key, item_selection, combo, button_label, a
     )
 end
 
+---@param name string
+---@param config_key string
+---@param v_speed number
+---@param v_min number
+---@param v_max number
+---@param display_format? string
+function this:drag_int(name, config_key, v_speed, v_min, v_max, display_format)
+    return self:generic_config(
+        name,
+        config_key,
+        imgui.drag_int,
+        v_speed,
+        v_min,
+        v_max,
+        display_format
+    )
+end
+
 return this

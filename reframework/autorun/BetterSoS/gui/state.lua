@@ -88,7 +88,15 @@ local this = {
             end,
             nil,
             function(key)
-                local guid = m.getItemNameGuid(tonumber(key) --[[@as app.ItemDef.ID]])
+                local item_id = tonumber(key)
+                if item_id < 0 then
+                    return config.lang:tr(
+                        "mod.combo_item_judge."
+                            .. util_table.reverse_lookup(mod.enum.judge_group, item_id)
+                    )
+                end
+
+                local guid = m.getItemNameGuid(item_id --[[@as app.ItemDef.ID]])
                 return game_lang.get_message_local2(guid)
             end
         ),
@@ -280,7 +288,11 @@ function this.init()
         util_table.keys(config_mod.monster)
     )
     this.combo.map:swap(util_table.map_array(ace_map.maps), nil, util_table.keys(config_mod.map))
-    this.combo.item:swap(util_table.map_array(ace_map.judge_items))
+    this.combo.item:swap(
+        util_table.map_array(
+            util_table.array_merge(util_table.values(mod.enum.judge_group), ace_map.judge_items)
+        )
+    )
     this.combo.type:swap(
         util_table.map_array(ace_map.quest_type),
         nil,

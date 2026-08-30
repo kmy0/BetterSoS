@@ -41,6 +41,27 @@ local function get_quest_target(quest)
     return ret
 end
 
+---@return {id: app.ItemDef.ID[], num: integer}?
+local function make_item_judge()
+    local config_mod = config.current.mod
+    if not config_mod.require_item_judge then
+        return
+    end
+
+    local item_id = tonumber(state.combo.item:get_key(config_mod.combo_item_judge)) --[[@as number]]
+    ---@type app.ItemDef.ID[]
+    local arr
+
+    if item_id < 0 then
+        local group = util_table.reverse_lookup(mod_enum.judge_group, item_id)
+        arr = ace_map.judge_group[group]
+    else
+        arr = { item_id }
+    end
+
+    return { id = arr, num = config_mod.slider_item_judge }
+end
+
 ---@return QuestFilter
 function this.make_quest_filter()
     local config_mod = config.current.mod
@@ -119,9 +140,7 @@ function this.make_quest_filter()
         item_wishlist = config_mod.require_item_wishlist,
         item_wishlist_any = config_mod.require_item_wishlist_any,
         item_rare = config_mod.require_item_rare,
-        item_judge = config_mod.require_item_judge and tonumber(
-            state.combo.item:get_key(config_mod.combo_item_judge)
-        ) or nil,
+        item_judge = make_item_judge(),
         quest_id = config_mod.require_quest_id and config_mod.quest_id ~= "" and tonumber(
             config_mod.quest_id
         ) or nil,
@@ -375,12 +394,18 @@ function this.predicate_quest(quest, quest_filter)
             local any_wishlisted = false
             local any_judge = false
             local any_rare = false
+            local judge_num = 0
 
             util_game.do_something_limited(quest.exRewards, function(_, _, value)
                 local item = value:get_ItemId()
 
-                if quest_filter.item_judge and not any_judge then
-                    any_judge = quest_filter.item_judge == item
+                if
+                    quest_filter.item_judge
+                    and not any_judge
+                    and util_table.contains(quest_filter.item_judge.id, item)
+                then
+                    judge_num = value.Num + judge_num --[[@as integer]]
+                    any_judge = judge_num >= quest_filter.item_judge.num
                 end
 
                 if (quest_filter.item_wishlist and has_wishlisted_items) and not any_wishlisted then
